@@ -1,1 +1,21 @@
 % !TeX root = ../report.tex
+\section{Introduction}
+ 
+\subsection{Task}
+The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \hyperref[https://competitions.codalab.org/competitions/17333]{https://competitions.codalab.org/competitions/17333}. The task is split into five subtasks:\\
+\begin{enumerate}
+\item EI-reg (Given a tweet and an emotion E, determine the  intensity of E that best represents the mental state of the tweeter—a real-valued score between 0 (least E) and 1 (most E).)
+\item EI-oc (Given a tweet and an emotion E, classify the tweet into one of four ordinal classes of intensity of E that best represents the mental state of the tweeter.)
+\item V-reg (Given a tweet, determine the intensity of sentiment or valence (V) that best represents the mental state of the tweeter—a real-valued score between 0 (most negative) and 1 (most positive).)
+\item V-oc (Given a tweet, classify it into one of seven ordinal classes, corresponding to various levels of positive and negative sentiment intensity, that best represents the mental state of the tweeter.)
+\item E-c (Given a tweet, classify it as 'neutral or no emotion' or as one, or more, of eleven given emotions that best represent the mental state of the tweeter.)
+\end{enumerate}
+ 
+ For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\
+ 
+\subsection{Models}		
+\subsection{Classification}		
+In the field of Natural Language Processing, emotion detection in text is the process of classifying documents in the form of words or sentences to a certain discrete set of predetermined emotions. \\		
+In this project we are working with 4 different emotions, namely anger, fear, joy and sadness. Our goal is to correctly classify an unseen tweet to one of these 4 emotions. We do this by training a model on a set of pre-sampled annotated tweets from the sem-eval task. We try different models and different approaches to both the classification and regression task. Amongst others we are using linear classifiers and recurrent neural networks.		
+\subsection{Regression}		
+The regression part is similar in the sense that we are still using NLP - only now we are detecting emotion intensity instead of detection. The tweets we are training on are annotated with continuous regression scores between 0 and 1.

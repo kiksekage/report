@@ -4,3 +4,11 @@
 
 For the feature based approach, a feature extraction is done with regards to the term frequency - inverse document frequency. This has been the golden standard [CITE, speach and language processing page 278] for feature extraction, and ensures that the features extracted have the highest descriptive effect with regards to the tweets in which the feature occurs versus the tweets in which the feature does not. These extracted features are then used for the training of one of three different models, a nearest centroid classifier or perceptron for classification, or a random forest regressor for regression.\\
 The three models all share the same general feature extraction, so they can be made directly comparable if the extraction parameters are kept comparatively the same. 
+\subsection{Custom features}
+Besides the Tf-idf feature extraction method, we have implemented our own custom feature extraction function. In this function we have different flags, corresponding to different features that could be of interest in these particular tweets. \\
+These different custom features involves e.g. whether or not a hashtag is present or if the spelling error of the whole tweet is above some threshold set by us. All of these custom features are boolean values in the sense that they are either present or not. \\
+These features are then appended to the feature matrix returned by the Tf-idf extraction function, so that they are taken into consideration when training the different models.
+\subsection{Model overview}
+\subsubsection{Nearest centroid}
+\subsubsection{Perceptron}
+\subsubsection{Random Forest Regressor}

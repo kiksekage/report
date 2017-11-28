@@ -1,6 +1,8 @@
 % !TeX root = ../report.tex
 \section{Introduction}
- 
+Humans communicate via natural language, but it is not only the message that is communicated, it is also the sentiment and intensity of that sentiment. Intensity of sentiment in sentences and words are borderline subjective and therefore difficult to classify in general. Therefore it is interesting to see if it is possible to build a model or program that can do that automatically. \\
+To do this we use Natural Language Processing (NLP), and in this field detecting emotion or sentiment in text can be used for analysing stance towards political statements or online consumer reviews of products. \\
+Twitter is a great service for detecting these sentiments, since it is user-written and often emotionally fuelled(spelling?).
 \subsection{Task}
 The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \hyperref[https://competitions.codalab.org/competitions/17333]{https://competitions.codalab.org/competitions/17333}. The task is split into five subtasks:\\
 \begin{enumerate}
@@ -11,11 +13,6 @@ The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be f
 \item E-c (Given a tweet, classify it as 'neutral or no emotion' or as one, or more, of eleven given emotions that best represent the mental state of the tweeter.)
 \end{enumerate}
  
- For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\
- 
-\subsection{Models}		
-\subsection{Classification}		
-In the field of Natural Language Processing, emotion detection in text is the process of classifying documents in the form of words or sentences to a certain discrete set of predetermined emotions. \\		
-In this project we are working with 4 different emotions, namely anger, fear, joy and sadness. Our goal is to correctly classify an unseen tweet to one of these 4 emotions. We do this by training a model on a set of pre-sampled annotated tweets from the sem-eval task. We try different models and different approaches to both the classification and regression task. Amongst others we are using linear classifiers and recurrent neural networks.		
-\subsection{Regression}		
-The regression part is similar in the sense that we are still using NLP - only now we are detecting emotion intensity instead of detection. The tweets we are training on are annotated with continuous regression scores between 0 and 1.
+For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\ 
+\subsection{Models}
+To best solve these subtasks we use different models to compare and analyse which are better for each subtask. Furthermore we try 2 different approaches to solve the tasks. One approach is the feature based approach which builds on the bag-of-words model (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the Deep Learning(igen reference måske?) way, in which we implement a Recurrent Neural Network (RNN).

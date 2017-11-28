@@ -7,4 +7,8 @@
 \subsection{Recurrent networks and gated recurrent networks}
 Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence was would show a strong emotional tendency towards fear or joy could sometimes rely on a negation at the start of the tweet, such as  [INSERT EXAMPLE HERE]. To accomodate this, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).\\
 A GRU is a modification of the standard unit in a feed forward network, in which it takes an input, applies a nonlinear activation function, and outputs the result (ER DET SANDT?). A GRU adds two internal vector operations, known as the update gate and and the reset gate. The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
-With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not. 
+With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
+\subsection{Nearest Centroid}
+Nearest centroid is a classification model that works by assigning a new data point/vector to the label whose centroid(mean) is nearest. The model fits by taking the feature matrix and the corresponding labels and calculates the centroid of each of the labels. It then predicts by classifying the new data point to the closest centroid.
+\subsection{Perceptron}
+\subsection{Random Forest}

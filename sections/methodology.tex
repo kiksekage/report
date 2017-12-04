@@ -5,8 +5,35 @@
 \subsection{Residual networks}
 
 \subsection{Recurrent networks and gated recurrent networks}
-Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence was would show a strong emotional tendency towards fear or joy could sometimes rely on a negation at the start of the tweet, such as  [INSERT EXAMPLE HERE]. To accomodate this, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).\\
-A GRU is a modification of the standard unit in a feed forward network, in which it takes an input, applies a nonlinear activation function, and outputs the result (ER DET SANDT?). A GRU adds two internal vector operations, known as the update gate and and the reset gate. The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
+Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a negation at the start of the tweet, such as  [INSERT EXAMPLE HERE], for example. To accommodate this, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).\\
+\\
+The GRU, as used in the model, are based on the work by [Cho, 2014 (også i Chung 2015)]. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
+The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
+
+\begin{equation} \label{eq:activation}
+h_{t}^{j} = \left(1 - z_{t}^{j}\right)h_{t-1}^{j}+z_{t}^{j}\tilde{h_{t}^{j}},
+\end{equation}\\
+
+where the update gate $z_{t}^{j}$ decides how much of the unit is updated in the activation. The update gate is computed\\
+
+\begin{equation}\label{eq:update}
+z_{t}^{j}=\sigma\left(W_{z}\mathrm{x}_{t}+U_{z}\mathrm{h}_{t-1}\right)^{j},
+\end{equation}\\
+
+where \textit{U} and \textit{W} are weight matrices. The reset gate is computed in the same fashion:\\
+
+\begin{equation}\label{eq:reset}
+r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
+\end{equation}\\
+
+The candidate activation, which is similar to a simple recurrent unit, is calculated [Bahdanau et al., 2014]\\
+
+\begin{equation} \label{eq:candidate}
+\tilde{h_{t}^{j}} = tanh\left(W\mathrm{x}_{t}+U\left(\mathrm{r}_{t}\odot\mathrm{h}_{t-1}\right)\right)^{j},
+\end{equation}\\
+
+where \textit{W} is the weights and $r_{t}$ is a set of reset gates and $\odot$ is the element-wise multiplication. When the reset gates are off (closer to 0) it allows the previous calculated steps to have less impact on the calculation of the candidate activation.\\
+A GRU is a modification of the standard unit in a feed forward network, in that it takes an input, applies a nonlinear activation function, and outputs the result (ER DET SANDT?). A GRU adds two internal vector operations, known as the update gate and and the reset gate. The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
 With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
 \subsection{Nearest Centroid}
 Nearest centroid is a classification model that works by assigning a new data point/vector to the label whose centroid(mean) is nearest. The model fits by taking the feature matrix and the corresponding labels and calculates the centroid of each of the labels. It then predicts by classifying the new data point to the closest centroid.

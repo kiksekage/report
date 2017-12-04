@@ -20,19 +20,18 @@ where the update gate $z_{t}^{j}$ decides how much of the unit is updated in the
 z_{t}^{j}=\sigma\left(W_{z}\mathrm{x}_{t}+U_{z}\mathrm{h}_{t-1}\right)^{j},
 \end{equation}\\
 
-where \textit{U} and \textit{W} are weight matrices. The reset gate is computed in the same fashion:\\
-
-\begin{equation}\label{eq:reset}
-r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
-\end{equation}\\
-
-The candidate activation, which is similar to a simple recurrent unit, is calculated [Bahdanau et al., 2014]\\
+where \textit{U} and \textit{W} are weight matrices. The candidate activation, which is similar to a simple recurrent unit, is calculated [Bahdanau et al., 2014]\\
 
 \begin{equation} \label{eq:candidate}
 \tilde{h_{t}^{j}} = tanh\left(W\mathrm{x}_{t}+U\left(\mathrm{r}_{t}\odot\mathrm{h}_{t-1}\right)\right)^{j},
 \end{equation}\\
 
-where \textit{W} is the weights and $r_{t}$ is a set of reset gates and $\odot$ is the element-wise multiplication. When the reset gates are off (closer to 0) it allows the previous calculated steps to have less impact on the calculation of the candidate activation.\\
+where \textit{W} is the weights and $r_{t}$ is a set of reset gates and $\odot$ is the element-wise multiplication. When the reset gates are off (closer to 0) it allows the previous calculated steps to have less impact on the calculation of the candidate activation. The reset gate is calculated much like the update gate:\\
+
+\begin{equation}\label{eq:reset}
+r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
+\end{equation}\\
+
 A GRU is a modification of the standard unit in a feed forward network, in that it takes an input, applies a nonlinear activation function, and outputs the result (ER DET SANDT?). A GRU adds two internal vector operations, known as the update gate and and the reset gate. The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
 With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
 \subsection{Nearest Centroid}

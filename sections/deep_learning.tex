@@ -1,1 +1,9 @@
 % !TeX root = ../report.tex
+
+\section{Deep Learning}
+In this section we will go through an overview of the model used in the "deep learning" attempt at solving the task at hand. The model seeks to solve to sub task in one go, namely: regression (task 1 in section 1.1) and classification (task 5 in section 1.1). For task one the model also predicts independently of the general emotion felt, i.e. tweets for joy, anger etc. get a 0-to-1 score using the same model.
+
+\subsection{Model overview}
+
+\subsubsection{Preprocessing of text and textual representation}
+For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximal amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vectors independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.

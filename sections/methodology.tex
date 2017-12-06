@@ -34,6 +34,21 @@ r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
 
 The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
 With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
+
+\subsection{Textual representation as word embeddings}
+For the neural network models to be able to process and work with text, a numerical representation of the individual words needs to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious that these these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information so as to solve the task at hand.\\
+The idea behind the word embeddings and how they can be used can be inferred from their high dimensional representations, a toy example:\\
+\\
+\begin{equation}
+\begin{aligned}
+\vec{car} = [0,0,5,0,5]\\
+\vec{ship} = [0,0,3,0,4]\\
+\vec{shampoo} = [4,0,2,0,0]
+\end{aligned}
+\end{equation}\\
+Since car and ship are both a means of transport, it would make sense for them to be grouped closer together than for example shampoo and car. One could even go further and say that shampoo and ship might be grouped ever so slightly closer together than car and shampoo since they both concern themselves with water, but these deeper connections need higher and higher dimensional representations as to become clear.\\
+These word vectors can then be fed into a neural network, which can in turn tune the weights of these words through backpropagation so that the higher level features, in our case, guessing the emotion intensity felt by a tweeter, can be derived.
+
 \subsection{Nearest Centroid}
 Nearest centroid is a classification model that works by assigning a new data point/vector to the label whose centroid(mean) is nearest. The model fits by taking the feature matrix and the corresponding labels and calculates the centroid of each of the labels. It then predicts by classifying the new data point to the closest centroid.
 \subsection{Perceptron}

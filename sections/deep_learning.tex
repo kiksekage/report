@@ -13,6 +13,7 @@ MODIFICER HVIS VI LAVER NOGET ANDET.\\
 The first iteration of the data augmentation consisted of reading in all the data for task 1 and 5 as described in section \ref{sec:preprop}. Since the tweets had different format of truth labels, one was a singular value (regression) and one was a multilabel list (classification), reading in the labels had to be augmented. When reading in a regression tweet the model would augment by append 11 dimensions extra for the binary flag values and when reading in a classification tweet the model prepend one extra dimension. All these augmented truth labels would be instantiated to -1, and this value would then act as a flag for later usage in loss function calculation.
 
 \subsubsection{Model architecture}
+Måske lidt lort\\
 \begin{figure}[H]
     \centering
     \begin{subfigure}[b]{0.3\textwidth}

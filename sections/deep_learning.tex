@@ -5,12 +5,30 @@ In this section we will go through an overview of the model used in the "deep le
 
 \subsection{Model overview}
 
-\subsubsection{Preprocessing of text and textual representation} \label{sec:preprop}
-For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximal amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vectors independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.
+\subsubsection*{Preprocessing of text and textual representation} \label{sec:preprop}
+For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximal amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vector independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.\\
+Since the model used both word and character representation, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network using backpropagation. 
 
-\subsubsection*{Augmentation of data}
+\subsubsection*{Augmentation of data} \label{sec:augm}
 MODIFICER HVIS VI LAVER NOGET ANDET.\\
-The first iteration of the data augmentation consisted of reading in all the data for task 1 and 5 as described in section \ref{sec:preprop}. Since the tweets had different format of truth labels, one was a singular value (regression) and one was a multilabel list (classification), reading in the labels had to be augmented. When reading in a regression tweet the model would augment by append 11 dimensions extra for the binary flag values and when reading in a classification tweet the model prepend one extra dimension. All these augmented truth labels would be instantiated to -1, and this value would then act as a flag for later usage in loss function calculation.
+The first iteration of the data augmentation consisted of reading in all the data for task 1 and 5 as described in section \ref{sec:preprop}. Since the tweets had different format of truth labels, one was a singular value (regression) and one was a multi-label list (classification), reading in the labels had to be augmented. Since the tweets were reused in the two tasks, some of the regression tweets could be augmented with their respective classification label, although, if no classification label was present the truth labels were set to -1, which would then act as a mask. Since there were more regression tweets than classification, the augmentation was done this way around.\\
+All the tweet representations were padded differently based on whether or not the tweet was being read as a word representation or character representation and tweets longer than the specified padding values were cut down to size. 
+
+\subsubsection*{Generating pretrained word embeddings}
+
+\subsection{Model output}
+Since the model reads in all regression data in one single input and outputs it in a similar bulk manner, the overall feeling from the regression data can not be intrinsically inferred from the regression value, meaning, the way that an "anger tweet" is classified as an anger tweet is its position in the large output matrix. That way, if a completely new tweet would be presented to the model, the value of the regression would be a more general emotion intensity felt by the tweeter but in a general sense. To help guide the intensity in a direction, the eleven classification labels could be used to infer the tweeters general state of mind. 
+
+\subsection{Loss functions}
+Since the model is multi-task model, more than one loss function was needed. The model solves two task which can not share loss functions, the regression and the classification of tweets.
+
+\subsubsection*{Regression loss function and metric}
+For the regression output of the model, mean squared error was chosen as a way to optimize the model with regards to Pearson-score.\\
+The Pearson correlation coefficient is calculated thus in the evaluation of the scores:\\
+\begin{equation} \label{eq:pearson}
+r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},
+\end{equation}\\
+Where \textit{gold} is the truth/gold labels and \textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted. HVORFOR GIVER EN LAVERE MSE EN LAVERE PEARSON? FORKLAR!!!
 
 \subsubsection{Model architecture}
 Måske lidt lort\\

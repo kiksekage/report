@@ -7,7 +7,7 @@
 \subsection{Recurrent networks and gated recurrent networks}
 Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a negation at the start of the tweet, such as  [INSERT EXAMPLE HERE], for example. To accommodate this, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).\\
 \\
-The GRU, as used in the model, are based on the work by [Cho, 2014 (også i Chung 2015)]. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
+The GRU, as used in the model, is based on the work by [Cho, 2014 (også i Chung 2015)]. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
 
 \begin{equation} \label{eq:activation}

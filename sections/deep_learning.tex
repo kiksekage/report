@@ -1,13 +1,14 @@
 % !TeX root = ../report.tex
 
 \section{Deep Learning}
-In this section we will go through an overview of the model used in the "deep learning" attempt at solving the task at hand. The model seeks to solve to sub task in one go, namely: regression (task 1 in section 1.1) and classification (task 5 in section 1.1). For task one the model also predicts independently of the general emotion felt, i.e. tweets for joy, anger etc. get a 0-to-1 score using the same model.
+In this section we will go through an overview of the model used in the "deep learning" attempt at solving the task at hand. The model seeks to solve two sub task in one go, namely: regression (task 1 in section \ref{sec:task}) and classification (task 5 in section \ref{sec:task}). For task 1 the model also predicts independently of the general emotion felt, i.e. tweets for joy, anger etc. get a 0-to-1 score using the same model.
 
 \subsection{Model overview}
 
 \subsubsection*{Preprocessing of text and textual representation} \label{sec:preprop}
-For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximal amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vector independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.\\
-Since the model used both word and character representation, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network using backpropagation. 
+For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximum amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vector independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.\\
+The pretrained embeddings used in the model are retrieved from a large set of pretrained embeddings which have been trained on Twitter data (~400 million tweets). The words in the dataset for the task at hand are then looked up in the pretrained embeddings. If these are not present a zero vector is used instead, which will then be trained from the ground up by the model.\\
+Since the model used both word and character representations, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network using backpropagation. 
 
 \subsubsection*{Augmentation of data} \label{sec:augm}
 MODIFICER HVIS VI LAVER NOGET ANDET.\\
@@ -17,18 +18,49 @@ All the tweet representations were padded differently based on whether or not th
 \subsubsection*{Generating pretrained word embeddings}
 
 \subsection{Model output}
-Since the model reads in all regression data in one single input and outputs it in a similar bulk manner, the overall feeling from the regression data can not be intrinsically inferred from the regression value, meaning, the way that an "anger tweet" is classified as an anger tweet is its position in the large output matrix. That way, if a completely new tweet would be presented to the model, the value of the regression would be a more general emotion intensity felt by the tweeter but in a general sense. To help guide the intensity in a direction, the eleven classification labels could be used to infer the tweeters general state of mind. 
+Since the model reads in all regression data in one single input and outputs it in a similar bulk manner, the overall feeling from the regression data can not be intrinsically inferred from the regression value, meaning, the way that an "anger tweet" is classified as an anger tweet is its position in the large output matrix. That way, if a completely new tweet would be presented to the model, the value of the regression would be an emotion intensity felt by the tweeter but in a general sense. To help guide the intensity in a direction, the eleven classification labels could be used to infer the tweeters general state of mind. 
 
 \subsection{Loss functions}
 Since the model is multi-task model, more than one loss function was needed. The model solves two task which can not share loss functions, the regression and the classification of tweets.
 
 \subsubsection*{Regression loss function and metric}
 For the regression output of the model, mean squared error was chosen as a way to optimize the model with regards to Pearson-score.\\
-The Pearson correlation coefficient is calculated thus in the evaluation of the scores:\\
+%The Pearson correlation coefficient is calculated thus in the evaluation of the scores:\\
 \begin{equation} \label{eq:pearson}
 r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},
 \end{equation}\\
-Where \textit{gold} is the truth/gold labels and \textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted. HVORFOR GIVER EN LAVERE MSE EN LAVERE PEARSON? FORKLAR!!!
+Where \textit{gold} is the truth/gold labels and \textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
+There are two aspects to getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the gold scores is done by having a similar distribution of the regression values. Both of these features will get reduced the closer the predictions values get to the gold scores, and therefore the mean squared error proved useful in solving the specific task.\\
+\\
+The metric used for the regression is mean absolute error:\\
+\begin{equation} \label{eq:meanabs}
+m_{abs}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}abs\left(gold_{i}-pred_{i}\right)
+\end{equation}\\
+Where $b_{size}$ is the batch size used by the model for during training calculations. 
+
+\subsubsection*{Classification loss function and metric}
+The loss function for the classification is a bit more convoluted since all regression tweets have regression labels but not all regression tweets have classification labels. This is handled by way of a mask, and the augmentation specified in section \ref{sec:augm}. The loss function is described as such:\\
+\begin{equation}
+f(gold,pred) =
+     \begin{cases}
+       0, &\quad\text{if gold = mask}\\
+       wbce(gold,pred), &\quad\text{otherwise} \\
+     \end{cases}
+\end{equation}\\
+where \textit{wbce} is our custom weighted binary cross entropy function. This is used in a batch wise manner as in the regression case:\\
+\begin{equation}
+L_{class}=\dfrac{1}{b_{size}} \sum_{i=1}^{b_{size}} f(gold_i, pred_i)
+\end{equation}\\
+ This loss function ensures that tweets with no classification labels do not impact the updating of the weights of the model by giving the predicted values a loss of zero.\\
+Binary cross entropy is defined as follows:\\
+\begin{equation}
+BCE(gold,pred) = -(gold \cdot log(pred)+(1-gold) \cdot log(1-pred))
+\end{equation}\\
+The custom weighted binary cross entropy function is defined as follows:\\
+\begin{equation}
+wBCE(gold,pred) = (gold \cdot 1_{weight} + (1-gold) \cdot 0_{weight}) \cdot BCE(gold, pred)
+\end{equation}\\
+where $1_{weight}$ and $0_{weight}$ are parameters that can be tuned in the model. This weighting parameter is included because of the uneven distribution of ones and zeros. The goal of the model is to detect whenever emotions are felt by the tweeter, and as such ones are to be valued more if guessed correctly. 
 
 \subsubsection{Model architecture}
 Måske lidt lort\\

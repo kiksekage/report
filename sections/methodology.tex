@@ -36,7 +36,7 @@ The update gate can choose which dimensions to copy or ignore, depending on the 
 With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
 
 \subsection{Textual representation as word embeddings}
-For the neural network models to be able to process and work with text, a numerical representation of the individual words needs to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious that these these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information so as to solve the task at hand.\\
+For the neural network models to be able to process and work with text, a numerical representation of the individual words needs to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious thats these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information so as to solve the task at hand.\\
 The idea behind the word embeddings and how they can be used can be inferred from their high dimensional representations, a toy example:\\
 \\
 \begin{equation}
@@ -48,6 +48,10 @@ The idea behind the word embeddings and how they can be used can be inferred fro
 \end{equation}\\
 Since car and ship are both a means of transport, it would make sense for them to be grouped closer together than for example shampoo and car. One could even go further and say that shampoo and ship might be grouped ever so slightly closer together than car and shampoo since they both concern themselves with water, but these deeper connections need higher and higher dimensional representations as to become clear.\\
 These word vectors can then be fed into a neural network, which can in turn tune the weights of these words through backpropagation so that the higher level features, in our case, guessing the emotion intensity felt by a tweeter, can be derived.
+
+\subsubsection{Training word embeddings}
+One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Since the meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted, but can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to used in. "push" could also mean a "git push" in the context of software development. For this task then, the context is that of Twitter and social media in a broad sense.\\
+These word embeddings, as used in the model, are trained as specified [MIKOLOV]. The objective of the training is the learn word representations that have a predictive ability to guess the surrounding words. 
 
 \subsection{Nearest Centroid}
 Nearest centroid is a classification model that works by assigning a new data point/vector to the label whose centroid(mean) is nearest. The model fits by taking the feature matrix and the corresponding labels and calculates the centroid of each of the labels. It then predicts by classifying the new data point to the closest centroid.

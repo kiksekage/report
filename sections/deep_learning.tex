@@ -8,7 +8,7 @@ In this section we will go through an overview of the model used in the "deep le
 \subsubsection*{Preprocessing of text and textual representation} \label{sec:preprop}
 For the textual preprocessing, all tweets are read in and converted using a mapping from the word to an integer. This ensures that words get mapped to the same key and also enables an enforcing on the maximum amount of words to be used. Train data is treated differently than development and test data, in that every word read in train data gets converted to a word vector independently based on the word but if an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language.\\
 The pretrained embeddings used in the model are retrieved from a large set of pretrained embeddings which have been trained on Twitter data (~400 million tweets). The words in the dataset for the task at hand are then looked up in the pretrained embeddings. If these are not present a zero vector is used instead, which will then be trained from the ground up by the model.\\
-Since the model used both word and character representations, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network using backpropagation. 
+Since the model used both word and character representations, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network using backpropagation. No pretrained embeddings were used for the characters and so they had to be trained from the ground up, every time.
 
 \subsubsection*{Augmentation of data} \label{sec:augm}
 MODIFICER HVIS VI LAVER NOGET ANDET.\\
@@ -16,6 +16,8 @@ The first iteration of the data augmentation consisted of reading in all the dat
 All the tweet representations were padded differently based on whether or not the tweet was being read as a word representation or character representation and tweets longer than the specified padding values were cut down to size. 
 
 \subsubsection*{Generating pretrained word embeddings}
+For the generation of pretrained word embeddings, the twitter Word2Vec model outlined in [GODIN] was used, and 400 dimensional word embeddings were used.\\
+KAN IKKE FINDE UD AF OM DET HER CLASHER MED PREPROP SECTIONEN
 
 \subsection{Model output}
 Since the model reads in all regression data in one single input and outputs it in a similar bulk manner, the overall feeling from the regression data can not be intrinsically inferred from the regression value, meaning, the way that an "anger tweet" is classified as an anger tweet is its position in the large output matrix. That way, if a completely new tweet would be presented to the model, the value of the regression would be an emotion intensity felt by the tweeter but in a general sense. To help guide the intensity in a direction, the eleven classification labels could be used to infer the tweeters general state of mind. 
@@ -62,23 +64,20 @@ wBCE(gold,pred) = (gold \cdot 1_{weight} + (1-gold) \cdot 0_{weight}) \cdot BCE(
 \end{equation}\\
 where $1_{weight}$ and $0_{weight}$ are parameters that can be tuned in the model. This weighting parameter is included because of the uneven distribution of ones and zeros. The goal of the model is to detect whenever emotions are felt by the tweeter, and as such ones are to be valued more if guessed correctly. 
 
-\subsubsection{Model architecture}
-Måske lidt lort\\
+\subsection{Model architecture}
+Since the model consists of two inputs, character and word representation of the tweets, to separate submodels work in tandem to process the tweets, and the result of these submodels are concatenated after the fact.
+
+DE ER FUCKING LORT DE HER AFSNIT, SKRIV OM
+
+\subsubsection*{Word input model}
+The word input of the tweets are 60 $\cdot$ 400 dimensional vectors that have been passed through the preprocessing and augmentation mentioned in section \ref{sec:preprop} and \ref{sec:augm}. These vectors are then passed into two 250-dimensional, bidirectional gated recurrent unit (BRUG GRU?) which traverse the tweet front to back and vice versa, and the outputs of the two GRU layers are then concatenated. This is the output of the word submodel.
+
+\subsubsection*{Character input model}
+The character input gets processed more than the word inputs. The character input of the tweets are 256 $\cdot$ 400 dimensional vectors and these vector get passed onto a residual neural network where the vectors get batch normalized, and activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and
+
 \begin{figure}[H]
     \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pictures/model_full.png}
-        \caption{The full model}
-        \label{fig:model_full}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pictures/model_chars.png}
-        \caption{The model only training on char representations}
-        \label{fig:model_chars}    
-    \end{subfigure}
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pictures/model_words.png}
-        \caption{The model only training on word representations}
-        \label{fig:model_words}
-    \end{subfigure}
+        \includegraphics[width=\textwidth]{pictures/model.png}
+        \caption{The full model, training on both word and character representations}
+        \label{fig:fullmodel}
 \end{figure}

@@ -36,7 +36,7 @@ There are two aspects to getting a good correlation score, i.e. a score of one. 
 \\
 The metric used for the regression is mean absolute error:\\
 \begin{equation} \label{eq:meanabs}
-m_{abs}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}abs\left(gold_{i}-pred_{i}\right)
+m_{reg}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}abs\left(gold_{i}-pred_{i}\right)
 \end{equation}\\
 Where $b_{size}$ is the batch size used by the model for during training calculations. 
 
@@ -62,18 +62,38 @@ The custom weighted binary cross entropy function is defined as follows:\\
 \begin{equation}
 wBCE(gold,pred) = (gold \cdot 1_{weight} + (1-gold) \cdot 0_{weight}) \cdot BCE(gold, pred)
 \end{equation}\\
-where $1_{weight}$ and $0_{weight}$ are parameters that can be tuned in the model. This weighting parameter is included because of the uneven distribution of ones and zeros. The goal of the model is to detect whenever emotions are felt by the tweeter, and as such ones are to be valued more if guessed correctly. 
-
+where $1_{weight}$ and $0_{weight}$ are parameters that can be tuned in the model. This weighting parameter is included because of the uneven distribution of ones and zeros. The goal of the model is to detect whenever emotions are felt by the tweeter, and as such ones are to be valued more if guessed correctly.  \\ \\
+The metric used here is a custom metric function which builds on binary accuracy. The custom part consists of masking the -1's the same way as the loss function, so that the metric returns a value corresponding to a correct guess whenever classification labels are missing. The custom metric function looks like this: \\
+\begin{equation}
+f(gold,pred) =
+     \begin{cases}
+       1, &\quad\text{if gold = mask}\\
+       binary\_accuracy(gold,pred), &\quad\text{otherwise} \\
+     \end{cases}
+\end{equation}\\
+where $binary\_accuracy$ is defined as follows: \\
+\begin{equation} \label{eq:bin_acc}
+binary\_accuracy(gold, pred) =
+	\begin{cases}
+		1, &\quad\text{if gold = round(pred)} \\
+		0 &\quad\text{otherwise} \\
+	\end{cases}
+\end{equation}\\
+where the pred value is rounded to 0 or 1 since it is a probability value of the guessed emotion.\\
+This equation is then used and averaged batch-wise like the loss: \\
+\begin{equation} \label{eq:class_metric}
+m_{reg}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}f\left(gold_{i}-pred_{i}\right)
+\end{equation}\\
 \subsection{Model architecture}
 Since the model consists of two inputs, character and word representation of the tweets, to separate submodels work in tandem to process the tweets, and the result of these submodels are concatenated after the fact.
 
 DE ER FUCKING LORT DE HER AFSNIT, SKRIV OM
 
 \subsubsection*{Word input model}
-The word input of the tweets are 60 $\cdot$ 400 dimensional vectors that have been passed through the preprocessing and augmentation mentioned in section \ref{sec:preprop} and \ref{sec:augm}. These vectors are then passed into two 250-dimensional, bidirectional gated recurrent unit (BRUG GRU?) which traverse the tweet front to back and vice versa, and the outputs of the two GRU layers are then concatenated. This is the output of the word submodel.
+The word input of the tweets are 60(MAXSENTLEN) $\cdot$ 400(WORDEMBEDDIM) dimensional vectors that have been passed through the preprocessing and augmentation mentioned in section \ref{sec:preprop} and \ref{sec:augm}. These vectors are then passed into two 250-dimensional, bidirectional gated recurrent unit (BRUG GRU?) which traverse the tweet front to back and vice versa, and the outputs of the two GRU layers are then concatenated. This is the output of the word submodel.
 
 \subsubsection*{Character input model}
-The character input gets processed more than the word inputs. The character input of the tweets are 256 $\cdot$ 400 dimensional vectors and these vector get passed onto a residual neural network where the vectors get batch normalized, and activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and
+The character input gets processed more than the word inputs. The character input of the tweets are 256(MAXWORDLEN) $\cdot$ 400(CHARDIM) dimensional vectors and these vector get passed onto a residual neural network where the vectors get batch normalized, and activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and
 
 \begin{figure}[H]
     \centering

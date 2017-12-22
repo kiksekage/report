@@ -51,9 +51,5 @@ These word vectors can then be fed into a neural network, which can in turn tune
 
 \subsubsection{Training word embeddings}
 One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Since the meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted, but can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to used in. "push" could also mean a "git push" in the context of software development. For this task then, the context is that of Twitter and social media in a broad sense.\\
-These word embeddings, as used in the model, are trained as specified in [MIKOLOV]. The objective of the training is the learn word representations that have a predictive ability to guess the surrounding words. 
-
-\subsection{Nearest Centroid}
-Nearest centroid is a classification model that works by assigning a new data point/vector to the label whose centroid(mean) is nearest. The model fits by taking the feature matrix and the corresponding labels and calculates the centroid of each of the labels. It then predicts by classifying the new data point to the closest centroid.
-\subsection{Perceptron}
+These word embeddings, as used in the model, are trained as specified in [MIKOLOV]. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
 \subsection{Random Forest}

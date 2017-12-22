@@ -1,1 +1,28 @@
 % !TeX root = ../report.tex
+
+\section{Discussion}
+
+\subsection{SemEval Task}
+
+\subsection{Deep learning}
+
+\subsubsection*{What should the model do and how should it do it?}
+A choice was taken early in the process that the model should be as general as possible and take as much data with differing truth labels as possible. The model, as of now, takes the truth labels from task 1 and task 5. These two tasks were chosen because of their seemingly relatedness, but difference in that they require regression and classification. The difference between task 1 and task 2 seem trivial, in that a mapping from a 0-to-1 regressional value can be mapped to an ordinal classification with relative ease, but the mapping from 0-to-1 regressional value to 11 binary flags indicating, emotions felt or not, seemed to require a more elaborate structure and loss function balancing.\\
+
+\subsubsection*{Loss functions; how to model the problem}
+In one of the first iterations of the model, the classification task loss functions would be applied to a 12 dimensional vector, the output of the former model, to check whether or not flags were set. This loss function structure resulted in very conservative guesses. The predictions would had very little variance, and all the guesses seemed to favour zeros instead of ones, which can be explained by looking at the data.\\
+
+CENTRER DEN HER MOTHERFUCKER\\
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|}
+& \text{Anger} & \text{Anticipation} & \text{Disgust} & \text{Fear} & \text{Joy} & \text{Love} & \text{Optimism} & \text{Pessimism} & \text{Sadness} & \text{Surprise} & \text{Trust} \\ \hline
+\text{\# of flags set} & 2605 & 990 & 2666 & 1269 & 2499 & 699 & 2007 & 812 & 2076 & 365 & 352 \\
+\text{\% of tweets} & 38\% & 14\% & 39\% & 19\% & 37\% & 10\% & 29\% & 12\% & 30\% & 5\% & 5\%
+\end{tabular} \label{tab:emotions}
+\caption{The actual flags set and percentage of the full classification dataset}
+\end{center}
+\end{table}\\
+The flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet, an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feelings flags set, which was to be understood as a "neutral" feeling.\\
+\\
+Because of the 

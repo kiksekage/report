@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Introduction}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Task}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Models}{4}{subsection.1.2}
+\contentsline {section}{\numberline {2}Related work}{4}{section.2}
+\contentsline {subsection}{\numberline {2.1}Semantic analysis RIGTIGE ORD?}{4}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Fedt navn}{5}{subsection.2.2}
+\contentsline {section}{\numberline {3}Methodology and theory}{5}{section.3}
+\contentsline {subsection}{\numberline {3.1}Residual networks}{5}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Recurrent networks and gated recurrent networks}{5}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Textual representation as word embeddings}{6}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Training word embeddings}{6}{subsubsection.3.3.1}
+\contentsline {subsection}{\numberline {3.4}Nearest Centroid}{7}{subsection.3.4}
+\contentsline {subsection}{\numberline {3.5}Perceptron}{7}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Random Forest}{7}{subsection.3.6}
+\contentsline {section}{\numberline {4}Feature based approach}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Custom features}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Model overview}{7}{subsection.4.2}
+\contentsline {section}{\numberline {5}Deep Learning}{8}{section.5}
+\contentsline {subsection}{\numberline {5.1}Model overview}{8}{subsection.5.1}
+\contentsline {subsection}{\numberline {5.2}Model output}{9}{subsection.5.2}
+\contentsline {subsection}{\numberline {5.3}Loss functions}{9}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Model architecture}{10}{subsection.5.4}
+\contentsline {section}{\numberline {6}Discussion}{11}{section.6}
+\contentsline {subsection}{\numberline {6.1}SemEval Task}{11}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}Deep learning}{12}{subsection.6.2}

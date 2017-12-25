@@ -8,7 +8,8 @@ The two models share the same general feature extraction, so they can be made di
 \subsection{Custom features}
 Besides the Tf-idf feature extraction method, we have implemented our own custom feature extraction function. In this function we have different flags, corresponding to different features that could be of interest in these particular tweets. \\
 These different custom features involves e.g. whether or not a hashtag is present or if the spelling error of the whole tweet is above some threshold set by us. All of these custom features are boolean values in the sense that they are either present or not. \\
-These features are then appended to the feature matrix returned by the Tf-idf extraction function, so that they are taken into consideration when training the different models.
+These features are then appended to the feature matrix returned by the Tf-idf extraction function, so that they are taken into consideration when training the different models. \\
+Custom features can be based on linguistic and contextual intuition as well as a higher degree of linguistic analysis, as opposed to the deep learning features which will be trained with a more mathematically and statistical paradigm in mind.
 
 \subsection{Model overview}
 All the models share the same feature extraction method and the actual models were implemented using libraries which allowed a very high level approach. This acted as an introduction to the subtasks and which ones would be interesting to focus on and also as a baseline system which would work as a stepstone for the deep learning models used later in the process. In the final version of the code, two feature based models were used:\\

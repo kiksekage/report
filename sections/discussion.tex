@@ -3,7 +3,6 @@
 \section{Discussion}
 
 \subsection{SemEval Task}
-
 \subsubsection{Reusing tweets}
 The full amount of unique tweets between task 1 and 5 is not easily inferable, but some rules can be deduced:\\
 \begin{itemize}
@@ -13,20 +12,34 @@ The full amount of unique tweets between task 1 and 5 is not easily inferable, b
 \end{itemize}
 Since the model is trained on the full 7102 regression tweets, two tweets with differing regressional values and feelings could map to the same classification labels. This can leave the model predicting ambiguously, since the same classification labels get associated with differing regression labels, words and character representations. This effect was not countered in any meaningful way, since it was not considered to be too disruptive. The effect could be countered by only selecting unique tweets, but this would then start interfering with the data given for the subtasks, and start losing relevance with regards to the tasks. 
 
-\subsection{Deep learning}
+\subsection{Feature based}
+\subsubsection{Custom features and effect}
+For the feature based approach, six custom features were used:
+\begin{itemize}
+\item Exclamation: check whether or not an exclamation mark was present in the tweet.
+\item Hashtag: check whether or not an hashtag was present in the tweet.
+\item Spelling: check whether or not are specified percentage of the tweet was mispelled.
+\item Negative emoji: check whether or not an emoji from a list of negative emojis was present in the tweet.
+\item Positive emoji: check whether or not an emoji from a list of positive emojis was present in the tweet.
+\item Emoji: check whether or not an emoji was present in the tweet.
+\end{itemize}
+All these custom features are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.
 
+\subsection{Deep learning}
 \subsubsection{What should the model do and how should it do it?}
 A choice was taken early in the process that the model should be as general as possible and take as much data with differing truth labels as possible. The model, as of now, takes the truth labels from task 1 and task 5. These two tasks were chosen because of their relatedness with regards to emotion inference from tweets, but difference in that they require regression and classification. The difference between task 1 and task 2 seem trivial, in that a mapping from a 0-to-1 regressional value can be mapped to an ordinal classification with relative ease, but the mapping from 0-to-1 regressional value to 11 binary flags, indicating emotions felt or not, seemed to require a more elaborate structure and loss function balancing.\\
+\\
+One thing of note is the way the data from task 1 is used in the final model. The regressional values are indirectly interpreted more as the outputs of a model trying to solve task 3 (\textit{Given a tweet, determine the intensity of sentiment or valence (V) that best represents the mental state of the tweeter—a real-valued score between 0 (most negative) and 1 (most positive)}) since emotionality is stripped implicitly. This is not the objective this data has been annotated towards, this has been annotated with regards to 4 specific emotions, but since the emotion of these scores are not directly evident from the output of the model, the scores can be considered to be more directly dependent of the classification label outputs. This is not the necessarily the most meaningful way of guessing emotion intensities but it makes sense within the context of the task the model solves.
 
 VI SKAL SKRIVE MERE.\\
-SKRIV NOGET OM AT VI BRUGER TASK 1 DATA SOM OM DET HELE VAR VALENS/AKTIVERING (ALTSÅ INGEN PRIMÆRE FØLELSER ASSOCIERET/INGEN SUBMODELS TRÆNET PR FØLELSE)
 
-\subsubsection{Model iterations}
+\subsubsection{Model iterations} \label{sec:iter}
 The first baby steps towards a multi task learning model was reached by solving the regression task first and having a secondary output which consisted of a 4 dimensional vector with sigmoid activation and a single output using a softmax layer which indicated which regression emotion was felt. This classification was easily implemented since the truth labels were readily available because of the regression task needing 4 different emotion groupings. This way of classifying tweets could be reintroduced as to avoid the ambiguity of the regression value output in the models current state.\\
-FLERE ITERATIONER
+The first iteration of the model that attempted to solve task 5 had a different output layer/loss function constellation with regards to the classification of the tweets. It had a single, 11 dimensional output vector which corresponded to the full classification label list. This model would have a high degree of skew and very little variance, and this was the product of having a single layer with a limited amount of weights to be tweaked on. Since an average label list had a high amount of zeros (as shown in table \ref{tab:skew}) the weighting for the classification output layer would have a tendency to guess zeros and since there was not enough parameters to be tweaked the results would end up looking the same for all tweets.\\
+The last, and current model iteration has 11, one-dimensional output vector, one for each classification label. The ability to tweak weights one a per-label basis ended up in the most meaningful predictions from the overall model architecture.
 
 \subsubsection{Loss functions; how to model the classification}
-In one of the first iterations of the model, the classification task loss functions would be applied to a 11 dimensional vector, the output of the former model, to check whether or not flags were set. This loss function structure resulted in very conservative guesses. The predictions would have very little variance, and all the guesses seemed to favour zeros instead of ones, which can be explained by looking at the data presented in table \ref{tab:skew}. This was mitigated by outputting each emotion through its own, 1 dimensional layer with separate weights for the last classification. \\
+As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet; an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feeling flags set, which was to be understood as a "neutral" feeling.\\
 \begin{table}[h]
 \scalebox{0.8}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|}
 & \text{Anger} & \text{Anticipation} & \text{Disgust} & \text{Fear} & \text{Joy} & \text{Love} & \text{Optimism} & \text{Pessimism} & \text{Sadness} & \text{Surprise} & \text{Trust} \\ \hline
@@ -36,8 +49,6 @@ In one of the first iterations of the model, the classification task loss functi
 \caption{The actual flags set and percentage of the full classification dataset}
 \label{tab:skew}
 \end{table}\\
-
-As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet; an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feeling flags set, which was to be understood as a "neutral" feeling.\\
 \\
 The following is the main metric used for classification in the official SemEval task:\\
 \begin{equation} \label{eq:accuracy}

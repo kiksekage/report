@@ -1,8 +1,8 @@
 % !TeX root = ../report.tex
 
-\section{Feature based approach}
+\section{Feature based approach}\label{sec:feature}
 
-For the feature based approach, a feature extraction is done with regards to the term frequency - inverse document frequency. This has been the golden standard [CITE, speach and language processing page 278] for feature extraction, and ensures that the features extracted have the highest descriptive effect with regards to the tweets in which the feature occurs versus the tweets in which the feature does not. These extracted features are then used for the training of one of two different models, depending on the subtask at hand.\\
+For the feature based approach, a feature extraction is done with regards to the term frequency - inverse document frequency. This has been the golden standard for feature extraction, and ensures that the features extracted have the highest descriptive effect with regards to the tweets in which the feature occurs versus the tweets in which the feature does not. These extracted features are then used for the training of one of two different models, depending on the subtask at hand.\\
 Both models builds on the random forest learning method since its properties supports both regression and multi-label classification. \\
 The two models share the same general feature extraction, so they can be made directly comparable if the extraction parameters are kept comparatively the same.
 

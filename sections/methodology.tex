@@ -2,8 +2,7 @@
 \section{Methodology and theory}
 
 \subsubsection{Term frequency - inverse document frequency}
-[SPEECH AND LANGUAGE PROCESSING SIDE 647]\\
-To capture the terms (words) that have the highest impact on a corpus of documents, or in this case, tweets, two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency}.\\
+To capture the terms (words) that have the highest impact on a corpus of documents, or in this case, tweets, two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency} \cite{speech}.\\
 Term frequency is the raw frequency of a single word within a tweet. A word that occurs a lot in the tweet will have a high frequency and vice versa. This term is based on the notion that a word that occurs often in a document will reflect more meaning of the document than a word that occurs less. Since the term frequency is only concerned with the frequency within the document, there is a need to expand this with a term that deals with the words occurrence in the full corpus.\\
 The inverse document frequency considers the words occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents, and as such inverse document frequency is calculated as such:\\
 \begin{equation} 
@@ -25,7 +24,7 @@ Because of the nature of tweets and the task at hand, a model was needed that co
 for example. In this specific example, the two parts of the tweet (seperated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
 To accommodate these dependencies, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).
 \\
-The GRU, as used in the model, is based on the work by [Cho, 2014 (også i Chung 2015)]. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
+The GRU, as used in the model, is based on the work by \cite{chung}. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
 \\
 \begin{equation} \label{eq:activation}
@@ -69,6 +68,6 @@ These word vectors can then be fed into a neural network, which can in turn tune
 
 \subsubsection{Training word embeddings}
 One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Since the meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted, but can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to used in. "push" could also mean a "git push" in the context of software development. For this task then, the context is that of Twitter and social media in a broad sense.\\
-These word embeddings, as used in the model, are trained as specified in [MIKOLOV]. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
+These word embeddings, as used in the model, are trained as specified in \cite{mikolov}. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
 
 \subsection{Random Forest}

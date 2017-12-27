@@ -65,3 +65,6 @@ Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t
 \end{equation}\\
 LAV MÅSKE EN FODNOTE TIL EQUATION???\\
 where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. This metric can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. The secondary metrics are a combination of micro and macro precision, recall and f-scores. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not set. This allowed for a more nuanced picture in the edge case were all of the flags were not set.
+
+\subsubsection{Lexicons and features}
+EMOJIS AND SENTIMENTS LEXICONS

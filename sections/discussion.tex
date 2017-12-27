@@ -18,11 +18,8 @@ davdav
 \subsection{Comparing the two approaches}
 davdav
 
-\subsubsection{Ensemble model}
-davdav
-
 \subsection{Feature based}
-\subsubsection{Custom features and effect}
+\subsubsection{Custom features and effects}
 For the feature based approach, six custom features were used:
 \begin{itemize}
 \item Exclamation: check whether or not an exclamation mark was present in the tweet.
@@ -34,18 +31,21 @@ For the feature based approach, six custom features were used:
 \end{itemize}
 All these custom features are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.
 
+\subsubsection{Difference between bag-of-words and deep learning}
+davdav
+
 \subsection{Deep learning}
 \subsubsection{What should the model do and how should it do it?}
 A choice was taken early in the process that the model should be as general as possible and take as much data with differing truth labels as possible. The model, as of now, takes the truth labels from task 1 and task 5. These two tasks were chosen because of their relatedness with regards to emotion inference from tweets, but difference in that they require regression and classification. The difference between task 1 and task 2 seem trivial, in that a mapping from a 0-to-1 regressional value can be mapped to an ordinal classification with relative ease, but the mapping from 0-to-1 regressional value to 11 binary flags, indicating emotions felt or not, seemed to require a more elaborate structure and loss function balancing.\\
 \\
-One thing of note is the way the data from task 1 is used in the final model. The regressional values are indirectly interpreted more as the outputs of a model trying to solve task 3 (\textit{Given a tweet, determine the intensity of sentiment or valence (V) that best represents the mental state of the tweeter—a real-valued score between 0 (most negative) and 1 (most positive)}) since emotionality is stripped implicitly. This is not the objective this data has been annotated towards, this has been annotated with regards to 4 specific emotions, but since the emotion of these scores are not directly evident from the output of the model, the scores can be considered to be more directly dependent of the classification label outputs. This is not the necessarily the most meaningful way of guessing emotion intensities but it makes sense within the context of the task the model solves.
+One thing of note is the way the data from task 1 is used in the final model. The regressional values are indirectly interpreted more as the outputs of a model trying to solve task 3 (\textit{Given a tweet, determine the intensity of sentiment or valence (V) that best represents the mental state of the tweeter—a real-valued score between 0 (most negative) and 1 (most positive)}) since emotionality is stripped implicitly. This is not the objective this data has been annotated towards, this has been annotated with regards to 4 specific emotions, but since the emotion of these scores are not directly evident from the output of the model, the scores can be considered to be more directly dependent of the classification label outputs. This is not necessarily the most meaningful way of guessing emotion intensities but it makes sense within the context of the task the model solves.
 
-VI SKAL SKRIVE MERE.\\
+VI SKAL SKRIVE MERE. 	F.EKS. SINGLE EMOTION TRAINING MOD FULD MODEL.\\
 
 \subsubsection{Model iterations} \label{sec:iter}
 The first baby steps towards a multi task learning model was reached by solving the regression task first and having a secondary output which consisted of a 4 dimensional vector with sigmoid activation and a single output using a softmax layer which indicated which regression emotion was felt. This classification was easily implemented since the truth labels were readily available because of the regression task needing 4 different emotion groupings. This way of classifying tweets could be reintroduced as to avoid the ambiguity of the regression value output in the models current state.\\
-The first iteration of the model that attempted to solve task 5 had a different output layer/loss function constellation with regards to the classification of the tweets. It had a single, 11 dimensional output vector which corresponded to the full classification label list. This model would have a high degree of skew and very little variance, and this was the product of having a single layer with a limited amount of weights to be tweaked on. Since an average label list had a high amount of zeros (as shown in table \ref{tab:skew}) the weighting for the classification output layer would have a tendency to guess zeros and since there was not enough parameters to be tweaked the results would end up looking the same for all tweets.\\
-The last, and current model iteration has 11, one-dimensional output vector, one for each classification label. The ability to tweak weights one a per-label basis ended up in the most meaningful predictions from the overall model architecture.
+The first iteration of the model that attempted to solve task 5 had a different output layer/loss function constellation with regards to the classification of the tweets. It had a single, 11 dimensional output vector which corresponded to the full classification label list. This model would have a high degree of skew and very little variance, and this was the product of having a single layer with a limited amount of weights to be tweaked on. Since an average label list had a high amount of zeros (as shown in table \ref{tab:skew}) the weighting for the classification output layer would have a tendency to guess zeros and since there was not enough parameters to be tweaked, the results would end up looking the same for all tweets.\\
+The last, and current model iteration has 11, one-dimensional output vectors, one for each classification label. The ability to tweak weights on a per-label basis ended up in the most meaningful predictions from the overall model architecture.
 
 \subsubsection{Loss functions; how to model the classification}
 As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet; an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feeling flags set, which was to be understood as a "neutral" feeling.\\
@@ -64,7 +64,7 @@ The following is the main metric used for classification in the official SemEval
 Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t}\rvert}{\lvert G_{t} \cup P_{t}\rvert}
 \end{equation}\\
 LAV MÅSKE EN FODNOTE TIL EQUATION???\\
-where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. This metric can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. The secondary metrics are a combination of micro and macro precision, recall and f-scores. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not set. This allowed for a more nuanced picture in the edge case were all of the flags were not set.
+where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. This metric can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. The secondary metrics are a combination of micro and macro precision, recall and f-scores. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case were all of the flags were not set.
 
 \subsubsection{Lexicons and features}
 EMOJIS AND SENTIMENTS LEXICONS

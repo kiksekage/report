@@ -1,7 +1,7 @@
 % !TeX root = ../report.tex
 \section{Introduction}
-We communicate via natural language, but it is not only the message that is communicated, it is also the sentiment and intensity of that sentiment. Intensity of sentiment in sentences and words are borderline subjective and therefore difficult to classify in general. Therefore it is interesting to see if it is possible to build a model or program that can do that automatically. \\
-To do this we use Natural Language Processing (NLP), and in this field detecting emotion or sentiment in text can be used for analysing stance towards political statements or online consumer reviews of products. \\
+We communicate via natural language, but it is not only the message that is communicated, it is also the sentiment and intensity of that sentiment. Intensity of sentiment in sentences and words are borderline subjective and therefore difficult to classify in general. Therefore it is interesting to see if it is possible to build a model or program that can do this automatically. \\
+Natural Language Processing (NLP) is the science regarding natural, "human" language, and in this field detecting emotion or sentiment in text can have a lot of real world uses, such as analysing stance towards political statements or online consumer reviews of products, etc. \\
 Twitter is a great service for detecting these sentiments, since it is user-written and often emotionally fuelled(spelling?).
 \subsection{Task} \label{sec:task}
 The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \hyperref[https://competitions.codalab.org/competitions/17333]{https://competitions.codalab.org/competitions/17333}. The task is split into five subtasks:\\
@@ -15,7 +15,7 @@ The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be f
  
 For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\ 
 \subsection{Models}
-To best solve these subtasks we use different models to compare and analyse which are better for each subtask. Furthermore we try 2 different approaches to solve the tasks. One approach is the feature based approach which builds on the bag-of-words model (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning(igen reference måske?) way, in which we implement a variation of a recurrent neural network (RNN), called a gated recurrent unit.
+To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is the feature based approach which builds on the bag-of-words model (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning(igen reference måske?) way, in which an implementation of a recurrent neural network (RNN), called a gated recurrent unit, is used.
 
 \subsection{Data}
 To get an understanding of the tasks to be solved, one needs to understand the way the data has been annotated. In table \ref{tab:tweets} are some exemplary tweets in the four regression emotions and their corresponding classfication labels.\\

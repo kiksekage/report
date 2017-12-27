@@ -114,4 +114,42 @@ HUSK AT SKRIVE OM F.EKS. HVOR MANGE ORD VORES GRU KIGGER PÅ AF GANGEN ETC.
 \end{figure}
 
 \subsection{Results and data}
-davdav
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/dropoutvalues.png}
+        \caption{Pearson scores with different dropout values}
+        \label{fig:dropoutvalues}
+\end{figure}
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/weightedBCEvalues.png}
+        \caption{Pearson scores with different weighted BCE values}
+        \label{fig:weightedBCEvalues}
+\end{figure}
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/weightedBCEplot.png}
+        \caption{Average Pearson score as a function of different weighted BCE values}
+        \label{fig:weightedBCEplot}
+\end{figure}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c|c|}
+& \text{Anger} & \text{Fear} & \text{Joy} & \text{Sadness} & \text{Avg.} \\ \hline
+\text{No embedding} & 0.249 & 0.471 & 0.208 & 0.362 & 0.323 \\
+\text{Embedding} & 0.382 & 0.520 & 0.108 & 0.434 & 0.361
+\end{tabular}
+\caption{Pearson scores with and without pre-trained word embeddings}
+\label{tab:no_emb}
+\end{table}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c|c|}
+& \text{Anger} & \text{Fear} & \text{Joy} & \text{Sadness} & \text{Avg.} \\ \hline
+\text{NADAM} & 0.282 & 0.480 & 0.205 & 0.373 & 0.335 \\
+\text{ADAM} & 0.405 & 0.457 & 0.150 & 0.429 & 0.360
+\end{tabular}
+\caption{Pearson scores with NADAM and ADAM optimizers}\label{tab:NADAM_ADAM}
+\end{table}

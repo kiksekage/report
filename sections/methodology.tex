@@ -1,14 +1,33 @@
 % !TeX root = ../report.tex
 \section{Methodology and theory}
 
+\subsubsection{Term frequency - inverse document frequency}
+[SPEECH AND LANGUAGE PROCESSING SIDE 647]\\
+To capture the terms (words) that have the highest impact on a corpus of documents, or in this case, tweets, two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency}.\\
+Term frequency is the raw frequency of a single word within a tweet. A word that occurs a lot in the tweet will have a high frequency and vice versa. This term is based on the notion that a word that occurs often in a document will reflect more meaning of the document than a word that occurs less. Since the term frequency is only concerned with the frequency within the document, there is a need to expand this with a term that deals with the words occurrence in the full corpus.\\
+The inverse document frequency considers the words occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents, and as such inverse document frequency is calculated as such:\\
+\begin{equation} 
+id f_{i} = log \left(\dfrac{N}{n_{i}}\right)+1,
+\end{equation}\\
+where \textit{N} is the total number of tweets in the corpus and \textit{n} is the number of tweets in which the word \textit{i} appears. Adding one to the term means that words that occur in all tweets are not completely igonred. The full tf $\cdot$ idf weighting of a word \textit{i} in a tweet \textit{j} is then:\\
+\begin{equation} 
+w_{i,j}= tf_{i,j}\cdot id f_{i}
+\end{equation}\\
+where $tf_{i,j}$ is the term frequency of the word \textit{i} in the tweet \textit{j} and $id f_{i}$ is the inverse document frequency of the word \textit{i}.
+
 \subsection{Residual networks}
 
 \subsection{Recurrent networks and gated recurrent networks}
-Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a negation at the start of the tweet, such as  [INSERT EXAMPLE HERE], for example. To accommodate this, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).\\
+Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a specific part at the start of the tweet, such as the tweet:\\
+\begin{center}
+\textit{I had really strange and awful dreams last night. I'd didn't even eat cheese before bed  \#lovemysleep},\\
+\end{center}
+for example. In this specific example, the two parts of the tweet (seperated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
+To accommodate these dependencies, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).
 \\
 The GRU, as used in the model, is based on the work by [Cho, 2014 (også i Chung 2015)]. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
-
+\\
 \begin{equation} \label{eq:activation}
 h_{t}^{j} = \left(1 - z_{t}^{j}\right)h_{t-1}^{j}+z_{t}^{j}\tilde{h_{t}^{j}},
 \end{equation}\\
@@ -32,7 +51,7 @@ r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
 \end{equation}\\
 
 The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
-With regards to text, these GRUs can begin to make assumptions on which parts of the corpus will affect other parts of the corpus and can do so whether or not two interacting parts of the corpus are close to each other or not.
+With regards to text, these GRUs can begin to make assumptions on which parts of the tweet have an interplay and can do so whether or not two interacting parts of the corpus are close to each other or not. By utilizing both forward and backward moving GRUs, tendencies in both directions can be found.
 
 \subsection{Textual representation as word embeddings}
 For the neural network models to be able to process and work with text, a numerical representation of the individual words needs to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious thats these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information so as to solve the task at hand.\\
@@ -51,4 +70,5 @@ These word vectors can then be fed into a neural network, which can in turn tune
 \subsubsection{Training word embeddings}
 One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Since the meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted, but can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to used in. "push" could also mean a "git push" in the context of software development. For this task then, the context is that of Twitter and social media in a broad sense.\\
 These word embeddings, as used in the model, are trained as specified in [MIKOLOV]. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
+
 \subsection{Random Forest}

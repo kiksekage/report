@@ -29,17 +29,26 @@
 \newcommand{\epm}{\end{pmatrix}}
 
 \renewcommand{\headrulewidth}{0pt}
+\newcommand{\bachelornavn}{DavDav}
+%SKRIV BACHELORNAVN HEROPPE
 
 \author{
   \Large{}
   \\ \texttt{} \\
 }
 
-\title{Bachelor navn
+\title{\bachelornavn
   \vspace{3cm}
   \Huge{} \\
   \Large{Thomas Nyegaard-Signori \& Casper Veistrup Helms}
 }
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[C]{\bachelornavn}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{1pt}
 
 \begin{document}
 
@@ -55,6 +64,8 @@
 \thispagestyle{empty}
 
 \newpage
+
+
 
 \tableofcontents
 

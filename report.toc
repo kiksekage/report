@@ -42,7 +42,7 @@
 \contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{18}{subsubsection.6.5.3}
 \contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{19}{subsubsection.6.5.4}
 \contentsline {section}{\numberline {7}Conclusion}{19}{section.7}
-\contentsline {section}{\numberline {8}Future work}{19}{section.8}
-\contentsline {subsection}{\numberline {8.1}Ensemble model}{19}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{19}{subsection.8.2}
+\contentsline {section}{\numberline {8}Future work}{20}{section.8}
+\contentsline {subsection}{\numberline {8.1}Ensemble model}{20}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{20}{subsection.8.2}
 \contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{20}{subsection.8.3}

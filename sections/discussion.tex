@@ -13,7 +13,8 @@ The full amount of unique tweets between task 1 and 5 is not easily inferable, b
 Since the model is trained on the full 7102 regression tweets, two tweets with differing regressional values and feelings could map to the same classification labels. This can leave the model predicting ambiguously, since the same classification labels get associated with differing regression labels, words and character representations. This effect was not countered in any meaningful way, since it was not considered to be too disruptive. The effect could be countered by only selecting unique tweets, but this would then start interfering with the data given for the subtasks, and start losing relevance with regards to the tasks. 
 
 \subsection{Error analysis}
-davdav
+davdav\\
+HUSK AT LAVE BÅDE FOR DE DÅRLIGE MEN OGSÅ DE GODE!
 
 \subsection{Comparing the two approaches}
 davdav
@@ -67,4 +68,14 @@ LAV MÅSKE EN FODNOTE TIL EQUATION???\\
 where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. This metric can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. The secondary metrics are a combination of micro and macro precision, recall and f-scores. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case were all of the flags were not set.
 
 \subsubsection{Lexicons and features}
-EMOJIS AND SENTIMENTS LEXICONS
+Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given. That said, there was many more data sources that could be considered.\\
+Emoji lexicons was one of them. Emojis are prevalent on twitter and they convey a lot of meaning in a difficult-to-map manner, meaning they sometimes might be used in an ironic or otherwise non-fitting situation. Take, for example:\\
+\begin{center}
+Can I just sulk in peace %😂
+(HER ER EN GRINE SMILEY ;))
+\end{center}
+This tweet has a gold value of 0.688 in sadness, but looking at the smiley alone would tell a very different story than the feeling being conveyed by the whole tweet. This sort of intricate, feature-like nature of emojis could warrant a seperate usage of lexicons so as to augment the word embeddings, only for emojis. This trend is apparent in \cite{wassa2017} where it is specified that 6 teams used emoji lexicons or an embedding used solely for emojis.\\
+\\
+TAL OM DET HER PAPER FRA WORKSHOP, DE BRUGER NÆSTEN INGENTING (YNU-HPCC at EmoInt-2017: Using a CNN-LSTM Model for Sentiment Intensity Prediction)\\
+Furthermore, sentiment lexicons is a resource that 9 out of the top 10 from the WASSA-2017 Shared Task used. These were used in one general way; a lookup in the lexicons is done for each word in the tweet, counted up the amount of occurrences in each lexicon (which typically had an overall emotion attached to it) and used a sometimes supplied score and kept a summation, as shown in \cite{seernet}. These were then used as more traditional linguistic features and fed to the models.\\
+EMOJIS AND SENTIMENTS LEXICONS, SENTENCE EMBEDDINGS (bruger vi måske allerede sentence embeddings?)!

@@ -21,16 +21,7 @@ davdav
 
 \subsection{Feature based}
 \subsubsection{Custom features and effects}
-For the feature based approach, six custom features were used:
-\begin{itemize}
-\item Exclamation: check whether or not an exclamation mark was present in the tweet.
-\item Hashtag: check whether or not an hashtag was present in the tweet.
-\item Spelling: check whether or not are specified percentage of the tweet was mispelled.
-\item Negative emoji: check whether or not an emoji from a list of negative emojis was present in the tweet.
-\item Positive emoji: check whether or not an emoji from a list of positive emojis was present in the tweet.
-\item Emoji: check whether or not an emoji was present in the tweet.
-\end{itemize}
-All these custom features are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.
+All these custom features introduced in \ref{sec:customfeat} are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.
 
 \subsubsection{Difference between bag-of-words and deep learning}
 davdav
@@ -48,7 +39,7 @@ The first baby steps towards a multi task learning model was reached by solving 
 The first iteration of the model that attempted to solve task 5 had a different output layer/loss function constellation with regards to the classification of the tweets. It had a single, 11 dimensional output vector which corresponded to the full classification label list. This model would have a high degree of skew and very little variance, and this was the product of having a single layer with a limited amount of weights to be tweaked on. Since an average label list had a high amount of zeros (as shown in table \ref{tab:skew}) the weighting for the classification output layer would have a tendency to guess zeros and since there was not enough parameters to be tweaked, the results would end up looking the same for all tweets.\\
 The last, and current model iteration has 11, one-dimensional output vectors, one for each classification label. The ability to tweak weights on a per-label basis ended up in the most meaningful predictions from the overall model architecture.
 
-\subsubsection{Loss functions; how to model the classification}
+\subsubsection{Loss functions; how to model the classification} \label{sec:lossdiscussion}
 As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet; an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feeling flags set, which was to be understood as a "neutral" feeling.\\
 \begin{table}[h]
 \scalebox{0.8}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|}

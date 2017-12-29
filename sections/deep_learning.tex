@@ -21,8 +21,7 @@ HUSK AT SKRIVE OM F.EKS. HVOR MANGE ORD VORES GRU KIGGER PÅ AF GANGEN ETC.
 
 
 \subsubsection{Character input model}
-The character input gets processed more than the word inputs. The character input of the tweets are 256(MAXWORDLEN) $\cdot$ 400(CHARDIM) dimensional vectors and these vectors get passed into a residual neural network where the vectors get batch normalized. An activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and\\
-
+The character input gets processed more than the word inputs. The character input of the tweets are 256(MAXWORDLEN) $\cdot$ 400(CHARDIM) dimensional vectors and these vectors get passed into a residual neural network where the vectors get batch normalized. An activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/model.png}
@@ -73,7 +72,7 @@ Binary cross entropy is defined as follows:\\
 BCE(gold,pred) = -(gold \cdot log(pred)+(1-gold) \cdot log(1-pred))
 \end{equation}\\
 The custom weighted binary cross entropy function is defined as follows:\\
-\begin{equation}
+\begin{equation} \label{eq:wBCE}
 wBCE(gold,pred) = (gold \cdot 1_{weight} + (1-gold) \cdot 0_{weight}) \cdot BCE(gold, pred)
 \end{equation}\\
 where $1_{weight}$ and $0_{weight}$ are parameters that can be tuned in the model. This weighting parameter is included because of the uneven distribution of ones and zeros. The goal of the model is to detect whenever emotions are felt by the tweeter, and as such ones are to be valued more if guessed.  \\ \\
@@ -101,12 +100,14 @@ m_{class}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}f\left(gold_{i}-pred_{i}\right
 
 \subsubsection{Combined loss function}
 The model is trained using the sum of equation (\ref{eq:lreg}) and (\ref{eq:lemotion}):\\
-\begin{equation}
+\begin{equation} \label{eq:lratio}
 L_{combined}(gold,pred)=L_{ratio}\cdot L_{reg}(gold, pred) +  \sum_{e\in E}\dfrac{(1-L_{ratio})}{|E|}\cdot L_{e}(gold, pred),
 \end{equation}\\
 where \textit{e} is one of the eleven emotions in \textit{E}. The ratio $L_{ratio}$ is a parameter that can be tweaked and can be used to force the model implicitly to weight one task higher than the other. Furthermore, the weighting of the single classification emotions can also be tweaked and given more weighting than the others.
 
-\subsection{Results and data}
+\subsection{Hyperparameter testing}
+\subsubsection{Regression, task 1}
+In figure \ref{fig:dropoutvalues} and \ref{fig:averagedropout} the Pearson score is plotted with regards to the different dropout values. Figure \ref{fig:dropoutvalues} shows the single emotions and averaged Pearson score and figure \ref{fig:averagedropout} shows the average Pearson score as a function of the dropout.
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/dropoutvalues.png}
@@ -115,16 +116,44 @@ where \textit{e} is one of the eleven emotions in \textit{E}. The ratio $L_{rati
 \end{figure}
 \begin{figure}[H]
     \centering
+        \includegraphics[width=\textwidth]{pictures/DropoutPlot.png}
+        \caption{Pearson scores with different loss weight values}
+        \label{fig:averagedropout}
+\end{figure}
+It is evident that dropout values higher than 0.5 results in worse Pearson scores. This is because of the models tendency to underfit because of the sheer amount of hidden units getting dropped in every run. Furthermore, predictions on joy is significantly worse than the other regression emotions.\\
+\\
+The weighting in the binary cross entropy, as used in equation (\ref{eq:wBCE}) still has an interplay with the Pearson score reached by the model, since the two tasks are solved jointly, as thus this correlation is relevant.
+\begin{figure}[H]
+    \centering
         \includegraphics[width=\textwidth]{pictures/weightedBCEvalues.png}
         \caption{Pearson scores with different weighted BCE values}
-        \label{fig:weightedBCEvalues}
+        \label{fig:BCEvalues}
 \end{figure}
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/weightedBCEplot.png}
         \caption{Average Pearson score as a function of different weighted BCE values}
-        \label{fig:weightedBCEplot}
+        \label{fig:averageBCE}
 \end{figure}
+The weightings shown in figure \ref{fig:BCEvalues} is the weight of the zeros and the one weights are then $1-0_{weight}$, as outlined in equation (\ref{eq:wBCE}). From looking at figure \ref{fig:BCEvalues} the first thing that jumps out is the Pearson scoren when a weighting of 0.35 is used. It is unclear why this outlier deviates so much from the general tendency, since the model and predictions were healthy, albeit very bad.\\
+In figure \ref{fig:averageBCE} it can be seen that the effect of the weighting is not wholly insignificant. The best Pearson score is calculate with a weighting of zeros to 0.45 and ones to 0.55. Beyond a weight of 0.6, that is, weighting zeros 0.6 and ones 0.4 the Pearson score started dropping off. Again, the outlier at 0.35 is clearly noticeable.\\
+\\
+The loss weights plotted in figure \ref{fig:LWvalues} and \ref{fig:averageLW} are the loss weights as outlined in equation (\ref{eq:lratio}).
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/LossWeightsvalues.png}
+        \caption{Pearson scores with different loss weight values}
+        \label{fig:LWvalues}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/LossWeightsPlot.png}
+        \caption{Pearson scores with different loss weight values}
+        \label{fig:averageLW}
+\end{figure}
+The loss weights have and outlier, and much like the outlier in the testing of weights for the binary cross entropy, is it unclear why it is present as the model guessed in the correct form, just badly.\\
+The general tendency of the loss weights was not fully as to be expected, meaning, a high weighting towards the regression task would yield a better Pearson score. This might have to do with the fact that the embedding weights being trained to do minimize the weighted sum of the two loss function (equation (\ref{eq:lratio})) might not favor one task heavily over the other, i.e. the two tasks have an overlap in the weights that solve them and in the overall structure of the tasks.
 
 \begin{table}[h]
 \centering
@@ -137,6 +166,8 @@ where \textit{e} is one of the eleven emotions in \textit{E}. The ratio $L_{rati
 \label{tab:no_emb}
 \end{table}
 
+From table \ref{tab:no_emb}, it is clear that embeddings give  a better score than no embeddings, although one noticeable difference is the Pearson score for joy. This could have something to do with the pretrained embedding weights not having a good instantiation towards the more positively weighted words, which then skews the results for that particular emotion.  
+
 \begin{table}[h]
 \centering
 \begin{tabular}{c|c|c|c|c|c|}
@@ -145,4 +176,52 @@ where \textit{e} is one of the eleven emotions in \textit{E}. The ratio $L_{rati
 \text{ADAM} & 0.405 & 0.457 & 0.150 & 0.429 & 0.360
 \end{tabular}
 \caption{Pearson scores with NADAM and ADAM optimizers}\label{tab:NADAM_ADAM}
+\end{table}
+
+Some light testing was done in way of optimizers used for the model. The final choice of optimizer was the ADAM optimizer with a learning rate of 0.001, a learning rate decay of $10^{-5}$ and clipping the gradients to 1. The only difference between the two optimizers was that NADAM used Nesterov momentum. Explaining the difference and going in-depth with optimizers is beyond the scope of this PAPER, and only superficial tests were done between the two. 
+
+\subsection{Results and data}
+The final model used was zeroed in on through an experimental basis. It used $0_{weight}=0.45$ and $1_{weight}=0.55$, a dropout of 0.5 and $L_{reg}=0.45$ and $L_{class}=0.55$. 400 dimensional word and char embeddings and a 250 dimensional GRU was used for each submodel. The resulting sanity check yielded following results:
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c|c}
+\text{Anger} & \text{Fear} & \text{Joy} & \text{Sadness} & \text{Avg.} \\ \hline
+0.865 & 0.896 & 0.882 & 0.897 & 0.885 \\
+\end{tabular}
+\caption{Sanity check Pearson scores for regression}
+\label{tab:sanityreg}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scalebox{0.7}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+\multicolumn{12}{c}{\textbf{F-micro}} & \textbf{Global accuracy}\\ \hline
+Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadness & Surprise & Trust & Neutral & \\ \cline{1-12}
+0.968 & 0.931 & 0.964 & 0.971 & 0.982 & 0.931 & 0.955 & 0.899 & 0.951 & 0.909 & 0.905 & 0.833 & 0.933 \\
+\end{tabular}}
+\caption{Sanity check scores for classification}
+\label{tab:sanityclass}
+\end{table}
+Where F-micro is the F-score calculated on a per-flag basis, as specified in the task outline (although with the added "neutral" emotion)\footnote{All the official evaluation metric are shown on \href{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}.}. F-score and how it is used in the task is discussed in section \ref{sec:lossdiscussion}.\\
+The results of the final model on the development data is shown in tables \ref{tab:devreg} and \ref{tab:devclass}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{c|c|c|c|c}
+\text{Anger} & \text{Fear} & \text{Joy} & \text{Sadness} & \text{Avg.} \\ \hline
+0.371 & 0.555 & 0.184 & 0.532 & 0.411 \\
+\end{tabular}
+\caption{Pearson scores for regression on development data}
+\label{tab:devreg}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scalebox{0.7}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+\multicolumn{12}{c}{\textbf{F-micro}} & \textbf{Global accuracy}\\ \hline
+Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadness & Surprise & Trust & Neutral & \\ \cline{1-12}
+0.687 & 0.232 & 0.626 & 0.638 & 0.685 & 0.416 & 0.574 & 0.179 & 0.555 & 0.141 & 0.038 & 0.053 & 0.443 \\
+\end{tabular}}
+\caption{Classification scores on development data}
+\label{tab:devclass}
 \end{table}

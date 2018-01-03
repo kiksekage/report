@@ -18,10 +18,10 @@ Since there is a considerable overlap in tweets, some tweets are reused in multi
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
-\parbox[t]{6cm}{'we need to do something. something must be done!!!!!'\n\nyour anxiety is amusing. nothing will be done. despair.} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
-\parbox[t]{6cm}{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax 😡😡😡😡} & 0.938 & - & - & - & 0.417\\ \hline
+\parbox[t]{6cm}{'we need to do something. something must be done!!!!!' your anxiety is amusing. nothing will be done. despair.} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
+\parbox[t]{6cm}{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}} & 0.938 & - & - & - & 0.417\\ \hline
 \parbox[t]{6cm}{Totally scare for this upcoming results .} & 0.438 & 0.828 & - & 0.438 & 0.260\\ \hline
-\parbox[t]{6cm}{@mrjamesob @LBC 😂 snowflake random such a funny man never a dull moment brilliant} & - & - & 0.591 & 0.074 & 0.528
+\parbox[t]{6cm}{@mrjamesob @LBC \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png} snowflake random such a funny man never a dull moment brilliant} & - & - & 0.591 & 0.074 & 0.528
 \end{tabular}
 \caption{Tweets and their corresponding gold intensity scores, bad predictions}
 \label{tab:regerrorhigh}
@@ -30,7 +30,7 @@ In table \ref{tab:regerrorhigh} are examples of where the deep learning predicte
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
-\parbox[t]{6cm}{What is this miserable ass weather all about 😭 dark and gloomy \#depressing \#weekoff \#wheresthesun} & 0.773 & 0.600 & - & 0.955 & 0.776\\ \hline
+\parbox[t]{6cm}{What is this miserable ass weather all about \includegraphics[scale=0.015]{pictures/loudly_crying_face_emoji.png} dark and gloomy \#depressing \#weekoff \#wheresthesun} & 0.773 & 0.600 & - & 0.955 & 0.776\\ \hline
 \parbox[t]{6cm}{Let's hope the ct scan gives us some answers on this lump today \#nervous} & - & 0.818 & - & - & 0.816\\ \hline
 \parbox[t]{6cm}{@\_jesskardashian @trevschan2 both are awesome.  People are missing out not watching fear!!!} & - & - & 0.375 & - & 0.376\\ \hline
 \parbox[t]{6cm}{@3lectric5heep Well that must sting doesn't it @CNN ?} & 0.344 & 0.468 & - & 0.304 & 0.307
@@ -46,9 +46,9 @@ Keeping in mind that the classification labels represent the following emotions 
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
 \parbox[t]{6cm}{Not sure tequila shots at my family birthday meal is up there with the best ideas I've ever had \#grim} & 0 0 1 0 0 0 0 0 1 0 0 & 1 1 0 0 1 0 1 0 0 1 1 & $\sim$ 27\% \\ \hline
-\parbox[t]{6cm}{Did men call themselves shy and mean it? So I reassure him that I'm just making sure he's a good investment and alla that 🙄} & 0 1 0 0 1 0 1 0 0 0 1 & 1 0 0 1 0 0 0 1 0 0 0 &  $\sim$ 36\%  \\ \hline
+\parbox[t]{6cm}{Did men call themselves shy and mean it? So I reassure him that I'm just making sure he's a good investment and alla that \includegraphics[scale=0.015]{pictures/face_with_rolling_eyes_emoji.png}} & 0 1 0 0 1 0 1 0 0 0 1 & 1 0 0 1 0 0 0 1 0 0 0 &  $\sim$ 36\%  \\ \hline
 \parbox[t]{6cm}{@SheenKL I assume the manga is \#good?} & 0 1 0 0 1 1 1 0 0 0 1 & 1 0 1 0 0 0 0 0 0 0 0 &  $\sim$ 36 \% \\ \hline
-\parbox[t]{6cm}{Being @ \#work \#sober %🤦🏽‍♂️
+\parbox[t]{6cm}{Being @ \#work \#sober \includegraphics[scale=0.07]{pictures/man_facepalm_emoji.png}
  I can not do it} & 0 0 1 1 0 0 0 1 1 0 0 & 0 1 0 0 1 0 1 0 0 0 0 & $\sim$ 36\% \\
 \end{tabular}
 \caption{Tweets and their corresponding gold classification list, bad predictions}
@@ -58,13 +58,12 @@ Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage \\ \hline
-\parbox[t]{6cm}{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our \£8m move for a relegated full back 😡} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
+\parbox[t]{6cm}{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our £8m move for a relegated full back \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
 \parbox[t]{6cm}{\#faith is like \#oil but \#fear is like \#dust easily blown away} & 0 0 0 1 0 0 1 0 0 0 1 & 0 0 0 1 0 0 1 0 0 0 1 & 100 \% 
 \end{tabular}
 \caption{Tweets and their corresponding gold classification list, good predictions}
 \label{tab:classerrorlow}
-\end{table}\\
-
+\end{table}
 There are certain structures that are prevalent in the good and bad scores. When looking at the amount of flags that are set (as shown in table \ref{tab:skew}), it is evident just from the small amount of surprise or trust flags that have been set that these emotions will be harder to predict, since there are so few points of reference. Furthermore, certain structures, such as anger and disgust flags on, are dominating a large amount of tweets, and as such there is good correlation between tweets with these gold labels and the predictions.
 
 
@@ -114,8 +113,7 @@ where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of t
 Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given. That said, there was many more data sources that could be considered.\\
 Emoji lexicons was one of them. Emojis are prevalent on twitter and they convey a lot of meaning in a difficult-to-map manner, meaning they sometimes might be used in an ironic or otherwise non-fitting situation. Take, for example:\\
 \begin{center}
-Can I just sulk in peace %😂
-(HER ER EN GRINE SMILEY ;))
+Can I just sulk in peace \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png}
 \end{center}
 This tweet has a gold value of 0.688 in sadness, but looking at the smiley alone would tell a very different story than the feeling being conveyed by the whole tweet. This sort of intricate, feature-like nature of emojis could warrant a seperate usage of lexicons so as to augment the word embeddings, only for emojis. This trend is apparent in \cite{wassa2017} where it is specified that 6 teams used emoji lexicons or an embedding used solely for emojis.\\
 \\

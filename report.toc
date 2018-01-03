@@ -19,14 +19,14 @@
 \contentsline {subsubsection}{\numberline {4.3.1}Regression, task 1}{10}{subsubsection.4.3.1}
 \contentsline {subsection}{\numberline {4.4}Results and data}{12}{subsection.4.4}
 \contentsline {section}{\numberline {5}Deep Learning}{12}{section.5}
-\contentsline {subsection}{\numberline {5.1}Model overview}{13}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Preprocessing of text and textual representation}{13}{subsubsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1}Model overview}{12}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Preprocessing of text and textual representation}{12}{subsubsection.5.1.1}
 \contentsline {subsubsection}{\numberline {5.1.2}Augmentation of data}{13}{subsubsection.5.1.2}
 \contentsline {subsubsection}{\numberline {5.1.3}Word input model}{13}{subsubsection.5.1.3}
 \contentsline {subsubsection}{\numberline {5.1.4}Character input model}{13}{subsubsection.5.1.4}
 \contentsline {subsection}{\numberline {5.2}Model output}{14}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}Loss functions}{14}{subsection.5.3}
-\contentsline {subsubsection}{\numberline {5.3.1}Regression loss function and metric}{15}{subsubsection.5.3.1}
+\contentsline {subsubsection}{\numberline {5.3.1}Regression loss function and metric}{14}{subsubsection.5.3.1}
 \contentsline {subsubsection}{\numberline {5.3.2}Classification loss function and metric}{15}{subsubsection.5.3.2}
 \contentsline {subsubsection}{\numberline {5.3.3}Combined loss function}{16}{subsubsection.5.3.3}
 \contentsline {subsection}{\numberline {5.4}Hyperparameter testing}{16}{subsection.5.4}

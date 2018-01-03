@@ -16,12 +16,21 @@ The first iteration of the data augmentation consisted of reading in all the dat
 All the tweet representations were padded differently based on whether or not the tweet was being read as a word representation or character representation, and tweets longer than the specified padding values were cut down to size. 
 
 \subsubsection{Word input model}
-The word input of the tweets are 60(MAXSENTLEN) $\cdot$ 400(WORDEMBEDDIM) dimensional vectors that have been passed through the preprocessing and augmentation specified in section \ref{sec:preprop} and \ref{sec:augm}. These vectors are then passed into two 250-dimensional, bidirectional GRUs which traverse the tweet front to back and vice versa, and the outputs of the two GRU layers are then concatenated. This is the output of the word submodel.\\
-HUSK AT SKRIVE OM F.EKS. HVOR MANGE ORD VORES GRU KIGGER PÅ AF GANGEN ETC.
-
-
+The word input to the model are 60  $\cdot$ 400 dimensional vectors that have been passed through the preprocessing and augmentation specified in section \ref{sec:preprop} and \ref{sec:augm}. These vectors are then passed into two 250-dimensional, bidirectional GRUs which traverse the tweet front to back and vice versa, and the outputs of the two GRU layers are then concatenated. This output is then batch normalized and a dropout is applied. This output of the word submodel is then concatenated later with the character submodel\\
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.25]{pictures/word_model.png}
+		\caption{The word input part of the full model}
+		\label{fig:wordmodel}
+\end{figure}
 \subsubsection{Character input model}
-The character input gets processed more than the word inputs. The character input of the tweets are 256(MAXWORDLEN) $\cdot$ 400(CHARDIM) dimensional vectors and these vectors get passed into a residual neural network where the vectors get batch normalized. An activation is then applied and 1 dimensional convolution is then applied. This is done twice, and the result of this then fed to a maxpooling layer and added to the input of the residual part of the model. The amount of residual layers is a hyperparameter to be passed to the model. A number of batch normalizations, activation and
+The character input to the model are 256 $\cdot$ 400 dimensional vectors that have been through the same preprocessing and augmentation as the word inputs. These vectors then furthermore get passed into a residual neural network which works as a loop of batch normalizations, dropout applications and 1-dimension convolutions. Each loop ends with an layer-addition of the previous loop layer with the current loop layer and then a max pooling. These vectors are then passed into two GRU layers similar to the word input which are then concatenated and passed along to be connected with the word input part.
+\begin{figure}[H]
+	\centering
+		\includegraphics[scale=0.25]{pictures/char_model.png}
+		\caption{The character input part of the full model}
+		\label{fig:charmodel}
+\end{figure}
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/model.png}

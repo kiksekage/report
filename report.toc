@@ -36,17 +36,19 @@
 \contentsline {subsection}{\numberline {6.1}SemEval Task}{21}{subsection.6.1}
 \contentsline {subsubsection}{\numberline {6.1.1}Reusing tweets}{21}{subsubsection.6.1.1}
 \contentsline {subsection}{\numberline {6.2}Error analysis}{21}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{21}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Feature based}{21}{subsection.6.4}
-\contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{21}{subsubsection.6.4.1}
-\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{21}{subsubsection.6.4.2}
-\contentsline {subsection}{\numberline {6.5}Deep learning}{21}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{21}{subsubsection.6.5.1}
-\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{22}{subsubsection.6.5.2}
-\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{22}{subsubsection.6.5.3}
-\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{23}{subsubsection.6.5.4}
-\contentsline {section}{\numberline {7}Conclusion}{24}{section.7}
-\contentsline {section}{\numberline {8}Future work}{24}{section.8}
-\contentsline {subsection}{\numberline {8.1}Ensemble model}{24}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{24}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{24}{subsection.8.3}
+\contentsline {subsubsection}{\numberline {6.2.1}Deep learning, regression scores}{21}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Deep learning, classification scores}{22}{subsubsection.6.2.2}
+\contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{23}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Feature based}{23}{subsection.6.4}
+\contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{23}{subsubsection.6.4.1}
+\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{23}{subsubsection.6.4.2}
+\contentsline {subsection}{\numberline {6.5}Deep learning}{23}{subsection.6.5}
+\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{23}{subsubsection.6.5.1}
+\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{24}{subsubsection.6.5.2}
+\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{24}{subsubsection.6.5.3}
+\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{25}{subsubsection.6.5.4}
+\contentsline {section}{\numberline {7}Conclusion}{25}{section.7}
+\contentsline {section}{\numberline {8}Future work}{25}{section.8}
+\contentsline {subsection}{\numberline {8.1}Ensemble model}{25}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{26}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{26}{subsection.8.3}

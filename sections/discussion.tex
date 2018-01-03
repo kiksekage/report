@@ -3,18 +3,70 @@
 \section{Discussion}
 
 \subsection{SemEval Task}
-\subsubsection{Reusing tweets}
+\subsubsection{Reusing tweets} \label{sec:tweetreuse}
 The full amount of unique tweets between task 1 and 5 is not easily inferable, but some rules can be deduced:\\
 \begin{itemize}
 \item All classification tweets are unique
 \item All classification tweets have a regression label, but not vice versa
 \item A tweet can appear in multiple regression emotions
 \end{itemize}
-Since the model is trained on the full 7102 regression tweets, two tweets with differing regressional values and feelings could map to the same classification labels. This can leave the model predicting ambiguously, since the same classification labels get associated with differing regression labels, words and character representations. This effect was not countered in any meaningful way, since it was not considered to be too disruptive. The effect could be countered by only selecting unique tweets, but this would then start interfering with the data given for the subtasks, and start losing relevance with regards to the tasks. 
+Since the model is trained on the full 7102 regression tweets, two tweets with differing regressional values and feelings could map to the same classification labels. This can leave the model predicting ambiguously, since the same classification labels get associated with differing regression labels, words and character representations. This effect was not countered in any meaningful way, but should be looked into more thoroughly. The effect could be countered by only selecting unique tweets, but this would then start interfering with the data given for the subtasks, and start losing relevance with regards to the tasks. 
 
 \subsection{Error analysis}
-davdav\\
-HUSK AT LAVE BÅDE FOR DE DÅRLIGE MEN OGSÅ DE GODE!
+\subsubsection{Deep learning, regression scores}
+Since there is a considerable overlap in tweets, some tweets are reused in multiple emotions from task 1 which then in turn can be reused a single time in task 5. The actual numbers of unique and "duplicate" tweets has been discussed in section \ref{sec:tweetreuse}, but looking at the predictions versus the gold scores can help get a feeling for the effects using the naive data augmentation presented in section \ref{sec:augm}. To show difficulties with the reuse of tweets combined with the presented augmentation of data, consider the following examples of where the is a large discrepancy between gold and predictions regression values:\\
+\begin{table}[h]
+\begin{tabular}{c|c|c|c|c|c|}
+Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
+\parbox[t]{6cm}{'we need to do something. something must be done!!!!!'\n\nyour anxiety is amusing. nothing will be done. despair.} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
+\parbox[t]{6cm}{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax 😡😡😡😡} & 0.938 & - & - & - & 0.417\\ \hline
+\parbox[t]{6cm}{Totally scare for this upcoming results .} & 0.438 & 0.828 & - & 0.438 & 0.260\\ \hline
+\parbox[t]{6cm}{@mrjamesob @LBC 😂 snowflake random such a funny man never a dull moment brilliant} & - & - & 0.591 & 0.074 & 0.528
+\end{tabular}
+\caption{Tweets and their corresponding gold intensity scores, bad predictions}
+\label{tab:regerrorhigh}
+\end{table}\\
+In table \ref{tab:regerrorhigh} are examples of where the deep learning predicted quite badly. As mentioned in section \ref{sec:tweetreuse}, the reuse of tweets is a rather considerable problem, and the actual interplay with the predictions were not clear until very late in the process of developing the model, although the fact that this kind of one-hit model would always have its weaknesses was not unexpected. If the model is to have a good regression prediction, the gold label values have to be bunched close together. The ambiguity of the guesses is then naively reduced, since the values of the labels perchance are the same.\\
+\begin{table}[h]
+\begin{tabular}{c|c|c|c|c|c|}
+Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
+\parbox[t]{6cm}{What is this miserable ass weather all about 😭 dark and gloomy \#depressing \#weekoff \#wheresthesun} & 0.773 & 0.600 & - & 0.955 & 0.776\\ \hline
+\parbox[t]{6cm}{Let's hope the ct scan gives us some answers on this lump today \#nervous} & - & 0.818 & - & - & 0.816\\ \hline
+\parbox[t]{6cm}{@\_jesskardashian @trevschan2 both are awesome.  People are missing out not watching fear!!!} & - & - & 0.375 & - & 0.376\\ \hline
+\parbox[t]{6cm}{@3lectric5heep Well that must sting doesn't it @CNN ?} & 0.344 & 0.468 & - & 0.304 & 0.307
+\end{tabular}
+\caption{Tweets and their corresponding gold intensity scores, good predictions}
+\label{tab:regerrorlow}
+\end{table}\\
+In table \ref{tab:regerrorlow} is shown some more favourable predictions made by the model, but again, it is evident from the multiple emotion intensity labels that the model, as is, will not be able to cope with assigning the same tweet with a differing value when stripped of emotionality. This is of course as to be expected, but the amount of reoccurring tweets was not accounted for when the overall model structure was considered.
+
+\subsubsection{Deep learning, classification scores}
+Keeping in mind that the classification labels represent the following emotions (as presented in section \ref{sec:introdata}): anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust, the classification predictions are here presented. These predictions are where the model is predicting badly:\\
+\begin{table}[h]
+\begin{tabular}{c|c|c|c|}
+Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
+\parbox[t]{6cm}{Not sure tequila shots at my family birthday meal is up there with the best ideas I've ever had \#grim} & 0 0 1 0 0 0 0 0 1 0 0 & 1 1 0 0 1 0 1 0 0 1 1 & $\sim$ 27\% \\ \hline
+\parbox[t]{6cm}{Did men call themselves shy and mean it? So I reassure him that I'm just making sure he's a good investment and alla that 🙄} & 0 1 0 0 1 0 1 0 0 0 1 & 1 0 0 1 0 0 0 1 0 0 0 &  $\sim$ 36\%  \\ \hline
+\parbox[t]{6cm}{@SheenKL I assume the manga is \#good?} & 0 1 0 0 1 1 1 0 0 0 1 & 1 0 1 0 0 0 0 0 0 0 0 &  $\sim$ 36 \% \\ \hline
+\parbox[t]{6cm}{Being @ \#work \#sober %🤦🏽‍♂️
+ I can not do it} & 0 0 1 1 0 0 0 1 1 0 0 & 0 1 0 0 1 0 1 0 0 0 0 & $\sim$ 36\% \\
+\end{tabular}
+\caption{Tweets and their corresponding gold classification list, bad predictions}
+\label{tab:classerrorhigh}
+\end{table}\\
+
+\begin{table}[h]
+\begin{tabular}{c|c|c|c|}
+Tweet & Gold labels & Predictions & Hit percentage \\ \hline
+\parbox[t]{6cm}{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our \£8m move for a relegated full back 😡} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
+\parbox[t]{6cm}{\#faith is like \#oil but \#fear is like \#dust easily blown away} & 0 0 0 1 0 0 1 0 0 0 1 & 0 0 0 1 0 0 1 0 0 0 1 & 100 \% 
+\end{tabular}
+\caption{Tweets and their corresponding gold classification list, good predictions}
+\label{tab:classerrorlow}
+\end{table}\\
+
+There are certain structures that are prevalent in the good and bad scores. When looking at the amount of flags that are set (as shown in table \ref{tab:skew}), it is evident just from the small amount of surprise or trust flags that have been set that these emotions will be harder to predict, since there are so few points of reference. Furthermore, certain structures, such as anger and disgust flags on, are dominating a large amount of tweets, and as such there is good correlation between tweets with these gold labels and the predictions.
+
 
 \subsection{Comparing the two approaches}
 davdav
@@ -35,7 +87,7 @@ One thing of note is the way the data from task 1 is used in the final model. Th
 VI SKAL SKRIVE MERE. 	F.EKS. SINGLE EMOTION TRAINING MOD FULD MODEL.\\
 
 \subsubsection{Model iterations} \label{sec:iter}
-The first baby steps towards a multi task learning model was reached by solving the regression task first and having a secondary output which consisted of a 4 dimensional vector with sigmoid activation and a single output using a softmax layer which indicated which regression emotion was felt. This classification was easily implemented since the truth labels were readily available because of the regression task needing 4 different emotion groupings. This way of classifying tweets could be reintroduced as to avoid the ambiguity of the regression value output in the models current state.\\
+The first baby steps towards a multitask learning model was reached by solving the regression task first and having a secondary output which consisted of a 4 dimensional vector with sigmoid activation and a single output using a softmax layer which indicated which regression emotion was felt. This classification was easily implemented since the truth labels were readily available because of the regression task needing 4 different emotion groupings. This way of classifying tweets could be reintroduced as to avoid the ambiguity of the regression value output in the models current state.\\
 The first iteration of the model that attempted to solve task 5 had a different output layer/loss function constellation with regards to the classification of the tweets. It had a single, 11 dimensional output vector which corresponded to the full classification label list. This model would have a high degree of skew and very little variance, and this was the product of having a single layer with a limited amount of weights to be tweaked on. Since an average label list had a high amount of zeros (as shown in table \ref{tab:skew}) the weighting for the classification output layer would have a tendency to guess zeros and since there was not enough parameters to be tweaked, the results would end up looking the same for all tweets.\\
 The last, and current model iteration has 11, one-dimensional output vectors, one for each classification label. The ability to tweak weights on a per-label basis ended up in the most meaningful predictions from the overall model architecture.
 

@@ -17,13 +17,13 @@ For all of these subtasks, three language subsubtasks are present, for english, 
 \subsection{Models}
 To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is the feature based approach which builds on the bag-of-words model (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning(igen reference måske?) way, in which an implementation of a recurrent neural network (RNN), called a gated recurrent unit, is used.
 
-\subsection{Data}
+\subsection{Data} \label{sec:introdata}
 To get an understanding of the tasks to be solved, one needs to understand the way the data has been annotated. In table \ref{tab:tweets} are some exemplary tweets in the four regression emotions and their corresponding classfication labels.\\
 \begin{table}[h]
 \scalebox{0.8}{\begin{tabular}{c|ccc}
 Regression emotion & Tweet & Regression value & Classification labels \\ 
 \hline
-Anger & \parbox[t]{6cm}{So my Indian Uber driver just called someone the N word. If I wasn't in a moving vehicle I'd have jumped out \#disgusted\strut} & 0.896 & 1 0 1 0 0 0 0 0 0 0 0 \\ 
+Anger & \parbox[t]{6cm}{So my Indian Uber driver just called someone the N word. If I wasn't in a moving vehicle I'd have jumped out \#disgusted} & 0.896 & 1 0 1 0 0 0 0 0 0 0 0 \\ 
 \hline
 Fear & \parbox[t]{6cm}{@Wunderlist Help are you guys still down? When can we go up?} & 0.312 & 0 1 0 0 0 0 0 0 0 0 0 \\ 
 \hline
@@ -34,4 +34,5 @@ Sadness & \parbox[t]{6cm}{Honestly don't know why I'm so unhappy most of the tim
 \caption{Exemplary tweets with regression and clasification labels}
 \label{tab:tweets}
 \end{table}
-The regressional value is how much of a particular regression emotion that is felt and the classification labels are mapped as such: anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust. Since the data for the two subtasks have been annotated independently, the anger flag could be off in an tweet with a low regression value for anger. 
+The regressional value is how much of a particular regression emotion that is felt and the classification labels are mapped as such: anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust. Since the data for the two subtasks have been annotated independently, the anger flag could be off in an tweet with a low regression value for anger. \\
+Furthermore, since this PAPER was written before the release date of the test data sets, all data used in this PAPER is either train data or development data.

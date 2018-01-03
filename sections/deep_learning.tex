@@ -1,8 +1,8 @@
 % !TeX root = ../report.tex
 
 \section{Deep Learning} \label{sec:deep}
-In this section, an overview of the model used in the "deep learning" attempt at solving task 1 and 5 will be presented. The model seeks to solve two subtasks in one go as a multi task learning problem. The subtasks are: regression (task 1 in section \ref{sec:task}) and classification (task 5 in section \ref{sec:task}). For task 1 the model also predicts independently of the general emotion felt, i.e. tweets for joy, anger etc. get a 0-to-1 score using the same model. \\
-HVILKEN TYPE MULTITASK LEARNING MODEL ER DET? HARD PARAMETER SHARING? HVILKE FRAMEWORK BLIVER BRUGT (REN FORMALIA).
+In this section, an overview of the model used in the "deep learning" attempt at solving task 1 and 5 will be presented. The model seeks to solve two subtasks in one go as a multitask learning problem. The subtasks are: regression (task 1 in section \ref{sec:task}) and classification (task 5 in section \ref{sec:task}). For task 1 the model also predicts independently of the general emotion felt, i.e. tweets for joy, anger etc. get a 0-to-1 score using the same model. \\
+The multitask model itself a hard parameter sharing model, meaning the weights of the model is shared between the main and auxiliary task being solved, and the model itself is built in Keras, the Python based neural network wrapper for Tensorflow. 
 
 \subsection{Model overview}
 
@@ -33,7 +33,7 @@ The character input gets processed more than the word inputs. The character inpu
 Since the model reads in all regression data in one single input and outputs it in a similar bulk manner, the overall feeling from the regression data can not be intrinsically inferred from the regression value, meaning, the way that an "anger tweet" is classified as an anger tweet is its position in the large output matrix. That way, if a completely new tweet would be presented to the model, the value of the regression would be an emotion intensity felt by the tweeter but in a general sense. To help guide the intensity in a direction, the eleven classification labels could be used to infer the tweeters general state of mind. 
 
 \subsection{Loss functions}
-Since the model is a multi-task model, more than one loss function was needed. The model solves two tasks which can not share loss functions, because of the inherent nature of the problem. One is a regression problem and the other a classification.
+Since the model is a multitask model, more than one loss function was needed. The model solves two tasks which can not share loss functions, because of the inherent nature of the problem. One is a regression problem and the other a classification.
 
 \subsubsection{Regression loss function and metric}
 For the regression output of the model, mean squared error was chosen as a way to optimize the model with regards to Pearson-score. Mean squared error is used in the following form:\\

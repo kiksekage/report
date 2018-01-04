@@ -102,12 +102,7 @@ As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotion
 \label{tab:skew}
 \end{table}\\
 \\
-The following is the main metric used for classification in the official SemEval task:\\
-\begin{equation} \label{eq:accuracy}
-Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t}\rvert}{\lvert G_{t} \cup P_{t}\rvert}
-\end{equation}\\
-LAV MÅSKE EN FODNOTE TIL EQUATION???\\
-where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. This metric can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. The secondary metrics are a combination of micro and macro precision, recall and f-scores. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case were all of the flags were not set.
+The metric \ref{eq:accuracy} used can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case where all of the flags were not set.
 
 \subsubsection{Lexicons and features}
 Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given. That said, there was many more data sources that could be considered.\\

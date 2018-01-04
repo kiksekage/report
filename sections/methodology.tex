@@ -70,4 +70,20 @@ These word vectors can then be fed into a neural network, which can in turn tune
 One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted. Since words can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to be used in. "push" could also mean a "git push" in the context of software development, for example. For this task then, the context is that of Twitter and social media in a broad sense.\\
 These word embeddings, as used in the model, are trained as specified in \cite{mikolov}. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
 
+\subsection{Metrics used}
+The metrics used in this project is the official metrics found on \cite{codalab}. \\
+The Pearson correlation coefficient is calculated thus in the evaluation of the scores and is used as the main metric for regression:\\
+\begin{equation} \label{eq:pearson}
+r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},
+\end{equation}\\
+where \textit{gold} is the truth/gold labels,\textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
+There are two aspects of getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the mean gold does not necessarily coincide with having similar values. Both of these features will get reduced the closer the prediction values get to the gold values, and therefore the mean squared error proved useful in solving the specific task.\\
+A secondary evaluation metric used for the regression task is the Pearson correlation for a subset that only include tweets with intensity score greater or equal to 0.5 \\ \\
+The following is the main metric used for classification:\\
+\begin{equation} \label{eq:accuracy}
+Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t}\rvert}{\lvert G_{t} \cup P_{t}\rvert}
+\end{equation}\\
+where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. \
+The secondary metrics are a combination of micro and macro precision, recall and f-scores.
 \subsection{Random Forest}
+Random Forest is an extended learning method based on a multitude of decision trees, in which an input vector is sent down each tree in the forest and then the result can be either an average or a weighted average in the case of e.g regression or in the case of classification it is a vote between the trees.

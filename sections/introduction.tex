@@ -4,7 +4,7 @@ We communicate via natural language, but it is not only the message that is comm
 Natural Language Processing (NLP) is the science regarding natural, "human" language, and in this field detecting emotion or sentiment in text can have a lot of real world uses, such as analysing stance towards political statements or online consumer reviews of products, etc. \\
 Twitter is a great service for detecting these sentiments, since it is user-written and often emotionally fuelled(spelling?).
 \subsection{Task} \label{sec:task}
-The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \hyperref[https://competitions.codalab.org/competitions/17333]{https://competitions.codalab.org/competitions/17333}. The task is split into five subtasks:\\
+The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \cite{codalab}. The task is split into five subtasks:\\
 \begin{enumerate}
 \item EI-reg (Given a tweet and an emotion E, determine the  intensity of E that best represents the mental state of the tweeter—a real-valued score between 0 (least E) and 1 (most E).)
 \item EI-oc (Given a tweet and an emotion E, classify the tweet into one of four ordinal classes of intensity of E that best represents the mental state of the tweeter.)
@@ -14,6 +14,7 @@ The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be f
 \end{enumerate}
  
 For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\ 
+For this project a choice was made to focus on subtasks 1 and 5, emotion intensity regression and classification. Furthermore only the english subsubtasks in these subtasks was considered.
 \subsection{Models}
 To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is the feature based approach which builds on the bag-of-words model (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning(igen reference måske?) way, in which an implementation of a recurrent neural network (RNN), called a gated recurrent unit, is used.
 

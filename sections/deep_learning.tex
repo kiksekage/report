@@ -45,17 +45,10 @@ Since the model reads in all regression data in one single input and outputs it 
 Since the model is a multitask model, more than one loss function was needed. The model solves two tasks which can not share loss functions, because of the inherent nature of the problem. One is a regression problem and the other a classification.
 
 \subsubsection{Regression loss function and metric}
-For the regression output of the model, mean squared error was chosen as a way to optimize the model with regards to Pearson-score. Mean squared error is used in the following form:\\
+For the regression output of the model, mean squared error was chosen as a way to optimize the model with regards to Pearson-score \ref{eq:pearson}. Mean squared error is used in the following form:\\
 \begin{equation} \label{eq:lreg}
 L_{reg}(gold, pred)=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}\left(gold_{i}-pred_{i}\right)^{2}
 \end{equation}\\
-The Pearson correlation coefficient is calculated thus in the evaluation of the scores:\\
-\begin{equation} \label{eq:pearson}
-r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},
-\end{equation}\\
-where \textit{gold} is the truth/gold labels,\textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
-There are two aspects of getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the mean gold does not necessarily coincide with having similar values. Both of these features will get reduced the closer the prediction values get to the gold values, and therefore the mean squared error proved useful in solving the specific task.\\
-\\
 The metric used for the regression is mean absolute error:\\
 \begin{equation} \label{eq:meanabs}
 m_{reg}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}abs\left(gold_{i}-pred_{i}\right)

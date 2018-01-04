@@ -28,7 +28,7 @@ All the models share the same feature extraction method and the actual models we
 \end{itemize}
 
 \subsection{Hyperparameter testing}
-\subsubsection{Regression, task 1}
+\subsubsection{Regression, task 1} \label{sec:regfeat}
 Figure \ref{fig:max_f_pearson} is a plot of the Pearson score with regards to the amount of max features used in the final feature based model to solve task 1. This model all six single custom features. Furthermore, an n-gram range of 1 to 5 was used in the model.
 \begin{figure}[H]
     \centering
@@ -102,8 +102,18 @@ Custom feature & Anger & Fear & Joy & Sadness \\ \hline
 \end{table}
 The importance shown in table \ref{tab:customimportance} has no direct correlation with how well a custom feature might be to predict new data, only how much influence it has on the train data is had been applied to. This is evident in the fact that hashtag has an overall lower importance than spelling, but when running the model with the same set-up, but with the hashtag or spelling custom features on, the spelling model gets a worse result than the hashtag model.
 
+\subsubsection{Classification, task 5}
+Figure \ref{fig:max_f_accuracy} is a plot of the accuracy with regards to the amount of max features used. This graph is equivalent to the one presented in section \ref{sec:regfeat}, just for the classification model. 
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/max_f_accuracy.png}
+        \caption{Accuracy as a function of max-features from 500-30000 with n-gram range 1-5 and all the custom features on}
+        \label{fig:max_f_accuracy}
+\end{figure}
+With regards to the more subtle hyperparameters that the model relies on, n-gram range and custom features, the results of the classification model reflect the results of the regression model, i.e., including all custom features improves the score and the best n-gram range for the classification is also 1-5. 
+
 \subsection{Results and data}
-The final models used 1000 max features, all six custom features, mentioned in section \ref{sec:customfeat} on and an n-gram range of 1 to 5. 
+The final models used 1000 max features, all six custom features, mentioned in section \ref{sec:customfeat} on and an n-gram range of 1 to 5. The sanity check results can be seen in table \ref{tab:featsanityreg} and \ref{tab:featsanityclass}.
 
 \begin{table}[H]
 \centering
@@ -125,6 +135,9 @@ Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadn
 \caption{Sanity check Pearson scores for classification}
 \label{tab:featsanityclass}
 \end{table}
+
+Where F-micro is the F-score calculated on a per-flag basis, as specified in the task outline (although with the added "neutral" emotion)\footnote{All the official evaluation metric are shown on \href{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}.}. F-score and how it is used in the task is discussed in section \ref{sec:lossdiscussion}.\\
+In table \ref{tab:featdevreg} and \ref{tab:featdevclass} the scores of the final model on the development data is shown.
 
 \begin{table}[H]
 \centering

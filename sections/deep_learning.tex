@@ -109,17 +109,11 @@ where \textit{e} is one of the eleven emotions in \textit{E}. The ratio $L_{rati
 
 \subsection{Hyperparameter testing}
 \subsubsection{Regression, task 1}
-In figure \ref{fig:dropoutvalues} and \ref{fig:averagedropout} the Pearson score is plotted with regards to the different dropout values. Figure \ref{fig:dropoutvalues} shows the single emotions and averaged Pearson score and figure \ref{fig:averagedropout} shows the average Pearson score as a function of the dropout.
-\begin{figure}[H]
-    \centering
-        \includegraphics[width=\textwidth]{pictures/dropoutvalues.png}
-        \caption{Pearson scores with different dropout values}
-        \label{fig:dropoutvalues}
-\end{figure}
+In figure \ref{fig:averagedropout} the Pearson score is plotted with regards to the different dropout values.
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/DropoutPlot.png}
-        \caption{Pearson scores with different loss weight values}
+        \caption{Pearson scores as a function of dropout value, loss weight set to 0.45, weighted BCE set to 0.5}
         \label{fig:averagedropout}
 \end{figure}
 It is evident that dropout values higher than 0.5 results in worse Pearson scores. This is because of the models tendency to underfit because of the sheer amount of hidden units getting dropped in every run. Furthermore, predictions on joy is significantly worse than the other regression emotions.\\
@@ -127,34 +121,21 @@ It is evident that dropout values higher than 0.5 results in worse Pearson score
 The weighting in the binary cross entropy, as used in equation (\ref{eq:wBCE}) still has an interplay with the Pearson score reached by the model, since the two tasks are solved jointly, as thus this correlation is relevant.
 \begin{figure}[H]
     \centering
-        \includegraphics[width=\textwidth]{pictures/weightedBCEvalues.png}
-        \caption{Pearson scores with different weighted BCE values}
-        \label{fig:BCEvalues}
-\end{figure}
-\begin{figure}[H]
-    \centering
         \includegraphics[width=\textwidth]{pictures/weightedBCEplot.png}
-        \caption{Average Pearson score as a function of different weighted BCE values}
+        \caption{Average Pearson score as a function of weighted BCE value, dropout set to 0.3, loss weight set to 0.45}
         \label{fig:averageBCE}
 \end{figure}
-The weightings shown in figure \ref{fig:BCEvalues} is the weight of the zeros and the one weights are then $1-0_{weight}$, as outlined in equation (\ref{eq:wBCE}). From looking at figure \ref{fig:BCEvalues} the first thing that jumps out is the Pearson scoren when a weighting of 0.35 is used. It is unclear why this outlier deviates so much from the general tendency, since the model and predictions were healthy, albeit very bad.\\
-In figure \ref{fig:averageBCE} it can be seen that the effect of the weighting is not wholly insignificant. The best Pearson score is calculate with a weighting of zeros to 0.45 and ones to 0.55. Beyond a weight of 0.6, that is, weighting zeros 0.6 and ones 0.4 the Pearson score started dropping off. Again, the outlier at 0.35 is clearly noticeable.\\
+The weightings shown in figure \ref{fig:averageBCE} is the weight of the zeros and the one weights are then $1-0_{weight}$, as outlined in equation (\ref{eq:wBCE}).\\
+In figure \ref{fig:averageBCE} it can be seen that the effect of the weighting is not wholly insignificant. The best Pearson score is reached with a weighting of zeros to 0.45 and ones to 0.55. Beyond a weight of 0.6, that is, weighting zeros 0.6 and ones 0.4 the Pearson score started dropping off. It is unclear why the outlier at a weighting of 0.35 deviates so much from the general tendency, since the model and predictions were healthy, albeit very bad.\\
 \\
-The loss weights plotted in figure \ref{fig:LWvalues} and \ref{fig:averageLW} are the loss weights as outlined in equation (\ref{eq:lratio}).
-\begin{figure}[H]
-    \centering
-        \includegraphics[width=\textwidth]{pictures/LossWeightsvalues.png}
-        \caption{Pearson scores with different loss weight values}
-        \label{fig:LWvalues}
-\end{figure}
-
+The loss weights plotted in figure \ref{fig:averageLW} are the loss weights as outlined in equation (\ref{eq:lratio}).
 \begin{figure}[H]
     \centering
         \includegraphics[width=\textwidth]{pictures/LossWeightsPlot.png}
-        \caption{Pearson scores with different loss weight values}
+        \caption{Average Pearson scores as a function of loss weight value, dropout set to 0.3, weighted BCE set to 0.45}
         \label{fig:averageLW}
 \end{figure}
-The loss weights have and outlier, and much like the outlier in the testing of weights for the binary cross entropy, is it unclear why it is present as the model guessed in the correct form, just badly.\\
+The loss weights have an outlier, and much like the outlier in the testing of weights for the binary cross entropy, is it unclear why it is present as the model guessed in the correct form, just badly.\\
 The general tendency of the loss weights was not fully as to be expected, meaning, a high weighting towards the regression task would yield a better Pearson score. This might have to do with the fact that the embedding weights being trained to do minimize the weighted sum of the two loss function (equation (\ref{eq:lratio})) might not favor one task heavily over the other, i.e. the two tasks have an overlap in the weights that solve them and in the overall structure of the tasks.
 
 \begin{table}[h]
@@ -180,7 +161,36 @@ From table \ref{tab:no_emb}, it is clear that embeddings give  a better score th
 \caption{Pearson scores with NADAM and ADAM optimizers}\label{tab:NADAM_ADAM}
 \end{table}
 
-Some light testing was done in way of optimizers used for the model. The final choice of optimizer was the ADAM optimizer with a learning rate of 0.001, a learning rate decay of $10^{-5}$ and clipping the gradients to 1. The only difference between the two optimizers was that NADAM used Nesterov momentum. Explaining the difference and going in-depth with optimizers is beyond the scope of this PAPER, and only superficial tests were done between the two. 
+Some light testing was done in way of optimizers used for the model. The final choice of optimizer was the ADAM optimizer with a learning rate of 0.001, a learning rate decay of $10^{-5}$ and clipping the gradients to 1. The only difference between the two optimizers was that NADAM used Nesterov momentum. Explaining the difference and going in-depth with optimizers is beyond the scope of this report, and only superficial tests were done between the two. \\
+\\
+More detailed barplots of the different runs can be seen in the appendix, figures \ref{fig:dropoutvalues}, \ref{fig:BCEvalues} and \ref{fig:LWvalues}.
+\subsubsection{Classification, task 5}
+In figure \ref{fig:dropoutacc} the accuracy is plotted with regards to the dropout values.
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/DropoutPlotAcc.png}
+        \caption{Accuracy as a function of dropout value, loss weight set to 0.45, weighted BCE to 0.45}
+        \label{fig:dropoutacc}
+\end{figure}
+As seen in the regression case, some dropout is needed, but there is not a clear tendency whether or not a specific dropout value is significantly better than the others.\\
+\\
+In figure \ref{fig:bceacc} the accuracy is plotted with regards to the different weighted BCE values.
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/WBCEPlotAcc.png}
+        \caption{Accuracy as a function of weighted BCE value, loss weight set to 0.45, dropout set to 0.3}
+        \label{fig:bceacc}
+\end{figure}
+As can be seen in figure \ref{fig:bceacc}, there is an outlier at a weighted BCE value of 0.35. It is also noticeable that at a weighted BCE value of 0.1, meaning that a weighting of zeros to a tenth of the summed loss contribution, the accuracy gets noticeably better. This value was not chosen, however, as it drastically reduced the Pearson score of the model, as seen in figure \ref{fig:averageBCE}, the overall loss would then be worse. \\
+\\
+In figure \ref{fig:lwacc} the accuracy is plotted with regards to the different loss weight values. 
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/LossWeightPlotAcc.png}
+        \caption{Accuracy as a function of loss weight value, weighted BCE set to 0.45, dropout set to 0.3}
+        \label{fig:lwacc}
+\end{figure}
+As with the regression case, the Pearson score at the different loss weights would be expected to have a larger impact.
 
 \subsection{Results and data}
 The final model used was zeroed in on through an experimental basis. It used $0_{weight}=0.45$ and $1_{weight}=0.55$, a dropout of 0.5 and $L_{reg}=0.45$ and $L_{class}=0.55$. 400 dimensional word and char embeddings and a 250 dimensional GRU was used for each submodel. The resulting sanity check yielded following results:
@@ -204,7 +214,6 @@ Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadn
 \caption{Sanity check scores for classification}
 \label{tab:sanityclass}
 \end{table}
-Where F-micro is the F-score calculated on a per-flag basis, as specified in the task outline (although with the added "neutral" emotion)\footnote{All the official evaluation metric are shown on \href{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}.}. F-score and how it is used in the task is discussed in section \ref{sec:lossdiscussion}.\\
 The results of the final model on the development data is shown in tables \ref{tab:devreg} and \ref{tab:devclass}.
 
 \begin{table}[H]

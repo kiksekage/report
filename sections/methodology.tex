@@ -15,12 +15,14 @@ w_{i,j}= tf_{i,j}\cdot id f_{i}
 where $tf_{i,j}$ is the term frequency of the term \textit{i} in the document \textit{j} and $id f_{i}$ is the inverse document frequency of the term \textit{i}.
 
 \subsection{Recurrent networks and gated recurrent networks}
+MANGLER MERE OMKRING RNN\\
 Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a specific part at the start of the tweet, such as this tweet:\\
 \begin{center}
 \textit{I had really strange and awful dreams last night. I'd didn't even eat cheese before bed  \#lovemysleep},\\
 \end{center}
-for example. In this specific example, the two parts of the tweet (seperated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
-To accommodate these dependencies, a version of a recurrent neural network (RNN) was used, called gated recurrent units (GRUs).
+for example. In this specific example, the two parts of the tweet (separated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
+\\
+For a fully connected, feed forward network to be able to model these dependencies it would need to be very deep and have a high dimensionality. This model would have to learn the rules of the modelled language for each position of the sentence \cite{deeplearning}. This can be modelled more intuitively (and computationally efficient) by using a recurrent neural network (RNN). An RNN is a version of a neural network that are stateful and share weights between each step. A step, in the case of the model presented later, is either a word or character. To accommodate these dependencies, a version of a RNN was used, called gated recurrent units (GRUs).\\
 \\
 The GRU, as used in the model, is based on the work in \cite{chung}. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\

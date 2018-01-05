@@ -12,16 +12,16 @@ The full amount of unique tweets between task 1 and 5 is not easily inferable, b
 \end{itemize}
 Since the model is trained on the full 7102 regression tweets, two tweets with differing regressional values and feelings could map to the same classification labels. This can leave the model predicting ambiguously, since the same classification labels get associated with differing regression labels, words and character representations. This effect was not countered in any meaningful way, but should be looked into more thoroughly. The effect could be countered by only selecting unique tweets, but this would then start interfering with the data given for the subtasks, and start losing relevance with regards to the tasks. 
 
-\subsection{Error analysis}
-\subsubsection{Deep learning, regression scores}
-Since there is a considerable overlap in tweets, some tweets are reused in multiple emotions from task 1 which then in turn can be reused a single time in task 5. The actual numbers of unique and "duplicate" tweets has been discussed in section \ref{sec:tweetreuse}, but looking at the predictions versus the gold scores can help get a feeling for the effects using the naive data augmentation presented in section \ref{sec:augm}. To show difficulties with the reuse of tweets combined with the presented augmentation of data, consider the following examples of where the is a large discrepancy between gold and predictions regression values:\\
+\subsection{Error analysis} 
+\subsubsection{Deep learning, regression scores} \label{sec:regscoredeep}
+Since there is a considerable overlap in tweets, some tweets are reused in multiple emotions from task 1 which then in turn can be reused a single time in task 5. The actual numbers of unique and "duplicate" tweets has been discussed in section \ref{sec:tweetreuse}, but looking at the predictions versus the gold scores can help get a feeling for the effects using the naive data augmentation presented in section \ref{sec:augm}. To show difficulties with the reuse of tweets combined with the presented augmentation of data, consider the following examples where the is a large discrepancy between gold and prediction regression values:\\
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
-\parbox[t]{6cm}{'we need to do something. something must be done!!!!!' your anxiety is amusing. nothing will be done. despair.} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
-\parbox[t]{6cm}{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}} & 0.938 & - & - & - & 0.417\\ \hline
-\parbox[t]{6cm}{Totally scare for this upcoming results .} & 0.438 & 0.828 & - & 0.438 & 0.260\\ \hline
-\parbox[t]{6cm}{@mrjamesob @LBC \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png} snowflake random such a funny man never a dull moment brilliant} & - & - & 0.591 & 0.074 & 0.528
+\parbox[t]{6cm}{\textit{'we need to do something. something must be done!!!!!' your anxiety is amusing. nothing will be done. despair.}} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
+\parbox[t]{6cm}{\textit{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}}} & 0.938 & - & - & - & 0.417\\ \hline
+\parbox[t]{6cm}{\textit{Totally scare for this upcoming results .}} & 0.438 & 0.828 & - & 0.438 & 0.260\\ \hline
+\parbox[t]{6cm}{\textit{@mrjamesob @LBC \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png} snowflake random such a funny man never a dull moment brilliant}} & - & - & 0.591 & 0.074 & 0.528
 \end{tabular}
 \caption{Tweets and their corresponding gold intensity scores, bad predictions}
 \label{tab:regerrorhigh}
@@ -30,10 +30,10 @@ In table \ref{tab:regerrorhigh} are examples of where the deep learning predicte
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
-\parbox[t]{6cm}{What is this miserable ass weather all about \includegraphics[scale=0.015]{pictures/loudly_crying_face_emoji.png} dark and gloomy \#depressing \#weekoff \#wheresthesun} & 0.773 & 0.600 & - & 0.955 & 0.776\\ \hline
-\parbox[t]{6cm}{Let's hope the ct scan gives us some answers on this lump today \#nervous} & - & 0.818 & - & - & 0.816\\ \hline
-\parbox[t]{6cm}{@\_jesskardashian @trevschan2 both are awesome.  People are missing out not watching fear!!!} & - & - & 0.375 & - & 0.376\\ \hline
-\parbox[t]{6cm}{@3lectric5heep Well that must sting doesn't it @CNN ?} & 0.344 & 0.468 & - & 0.304 & 0.307
+\parbox[t]{6cm}{\textit{What is this miserable ass weather all about \includegraphics[scale=0.015]{pictures/loudly_crying_face_emoji.png} dark and gloomy \#depressing \#weekoff \#wheresthesun}} & 0.773 & 0.6 & - & 0.955 & 0.776\\ \hline
+\parbox[t]{6cm}{\textit{Let's hope the ct scan gives us some answers on this lump today \#nervous}} & - & 0.818 & - & - & 0.816\\ \hline
+\parbox[t]{6cm}{\textit{@\_jesskardashian @trevschan2 both are awesome.  People are missing out not watching fear!!!}} & - & - & 0.375 & - & 0.376\\ \hline
+\parbox[t]{6cm}{\textit{@3lectric5heep Well that must sting doesn't it @CNN ?}} & 0.344 & 0.468 & - & 0.304 & 0.307
 \end{tabular}
 \caption{Tweets and their corresponding gold intensity scores, good predictions}
 \label{tab:regerrorlow}
@@ -45,11 +45,11 @@ Keeping in mind that the classification labels represent the following emotions 
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
-\parbox[t]{6cm}{Not sure tequila shots at my family birthday meal is up there with the best ideas I've ever had \#grim} & 0 0 1 0 0 0 0 0 1 0 0 & 1 1 0 0 1 0 1 0 0 1 1 & $\sim$ 27\% \\ \hline
-\parbox[t]{6cm}{Did men call themselves shy and mean it? So I reassure him that I'm just making sure he's a good investment and alla that \includegraphics[scale=0.015]{pictures/face_with_rolling_eyes_emoji.png}} & 0 1 0 0 1 0 1 0 0 0 1 & 1 0 0 1 0 0 0 1 0 0 0 &  $\sim$ 36\%  \\ \hline
-\parbox[t]{6cm}{@SheenKL I assume the manga is \#good?} & 0 1 0 0 1 1 1 0 0 0 1 & 1 0 1 0 0 0 0 0 0 0 0 &  $\sim$ 36 \% \\ \hline
-\parbox[t]{6cm}{Being @ \#work \#sober \includegraphics[scale=0.07]{pictures/man_facepalm_emoji.png}
- I can not do it} & 0 0 1 1 0 0 0 1 1 0 0 & 0 1 0 0 1 0 1 0 0 0 0 & $\sim$ 36\% \\
+\parbox[t]{6cm}{\textit{Not sure tequila shots at my family birthday meal is up there with the best ideas I've ever had \#grim}} & 0 0 1 0 0 0 0 0 1 0 0 & 1 1 0 0 1 0 1 0 0 1 1 & $\sim$ 27\% \\ \hline
+\parbox[t]{6cm}{\textit{Did men call themselves shy and mean it? So I reassure him that I'm just making sure he's a good investment and alla that \includegraphics[scale=0.015]{pictures/face_with_rolling_eyes_emoji.png}}} & 0 1 0 0 1 0 1 0 0 0 1 & 1 0 0 1 0 0 0 1 0 0 0 &  $\sim$ 36\%  \\ \hline
+\textit{\parbox[t]{6cm}{@SheenKL I assume the manga is \#good?}} & 0 1 0 0 1 1 1 0 0 0 1 & 1 0 1 0 0 0 0 0 0 0 0 &  $\sim$ 36 \% \\ \hline
+\parbox[t]{6cm}{\textit{Being @ \#work \#sober \includegraphics[scale=0.07]{pictures/man_facepalm_emoji.png}
+ I can not do it}} & 0 0 1 1 0 0 0 1 1 0 0 & 0 1 0 0 1 0 1 0 0 0 0 & $\sim$ 36\% \\
 \end{tabular}
 \caption{Tweets and their corresponding gold classification list, bad predictions}
 \label{tab:classerrorhigh}
@@ -58,8 +58,8 @@ Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
 \begin{table}[h]
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage \\ \hline
-\parbox[t]{6cm}{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our £8m move for a relegated full back \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
-\parbox[t]{6cm}{\#faith is like \#oil but \#fear is like \#dust easily blown away} & 0 0 0 1 0 0 1 0 0 0 1 & 0 0 0 1 0 0 1 0 0 0 1 & 100 \% 
+\parbox[t]{6cm}{\textit{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our £8m move for a relegated full back \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}}} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
+\parbox[t]{6cm}{\textit{\#faith is like \#oil but \#fear is like \#dust easily blown away}} & 0 0 0 1 0 0 1 0 0 0 1 & 0 0 0 1 0 0 1 0 0 0 1 & 100 \% 
 \end{tabular}
 \caption{Tweets and their corresponding gold classification list, good predictions}
 \label{tab:classerrorlow}
@@ -68,8 +68,38 @@ There are certain structures that are prevalent in the good and bad scores. When
 
 
 \subsection{Comparing the two approaches}
-To compare the two methods, a high level comparison was the first way of getting a grasp of the differences in predictions. The variance of the predictions in the regression case was the natural choice of comparison, and in figure 
-
+To compare the two methods, a high level comparison was the first way of getting a grasp of the differences in predictions. The variance of the predictions in the regression case was the natural choice of comparison, and in figure \ref{fig:boxplot} the differences can be seen.
+\begin{figure}[H]
+    \centering
+        \includegraphics[width=\textwidth]{pictures/boxplotmix.png}
+        \caption{The variance of the two models prediction on regression data}
+        \label{fig:boxplot}
+\end{figure}
+From figure \ref{fig:boxplot}, it is evident that none of the two models match the variance of the gold scores. In general, both models suffer in the edgecases, where the scores are high (> 0.9) and where they are low (< 0.2). There are two obvious instances where the difference between the two approaches is obvious, this being the scores with anger and joy tweets. The most favourable variance in the joy case is reached with the feature based model, and this is reflected in the scores seen in section \ref{sec:featscores} and \ref{sec:deepscores} (Pearson score of 0.429 for the feature based model, 0.184 for the deep learning model). This difference can be explained by looking at the way the model generates predictions. Since the feature based model generates a new submodel for each feeling, the specific  submodel specializes in predicting one specific emotion, not considering a general, objective understanding of the words and their emotionality.\\
+This is attempted by the deep learning model, but what happens with the data augmentation and by combining all tweets into one large pool is an implicit stripping of the emotionality of the tweets. An analogy would be to consider each tweet as a vector, with the regression emotion being the direction and the regression value being the magnitude of this vector. By combining all tweets in to one great pool (and by having tweets appear under different feelings and with different regression values) and by attempting to solve task 1 with one model and one set of weights/parameters, the direction of the "tweet vector" is stripped, and only magnitude is considered. This analogy can help understand why and how the model will predict when the tweet has four different gold labels in four different emotions (as seen in section \ref{sec:regscoredeep}).\\
+\\
+For a low level comparison, two exemplary tweets with multiple regression labels are used to represent the difference between the models.
+\begin{table}[h]
+\begin{tabular}{c|c|c|c|}
+\parbox[t]{6cm}{\textit{'we need to do something. something must be done!!!!!' your anxiety is amusing. nothing will be done. despair.}} & Gold score & Feat prediction & Deep prediction \\ \hline
+Anger & 0.517 & 0.477 & 0.761\\ \hline
+Fear & 0.800 & 0.812 & 0.761\\ \hline
+Joy & 0.197 & 0.376 & 0.761\\ \hline
+Sadness & 0.707 & 0.574 & 0.761
+\end{tabular}
+\\[2ex]
+\begin{tabular}{c|c|c|c|}
+\parbox[t]{6cm}{\textit{What is this miserable ass weather all about \includegraphics[scale=0.015]{pictures/loudly_crying_face_emoji.png} dark and gloomy \#depressing \#weekoff \#wheresthesun}} & Gold score & Feat prediction & Deep prediction \\ \hline
+Anger & 0.773 & 0.46 & 0.777\\ \hline
+Fear & 0.6 & 0.526 & 0.777 \\ \hline
+Joy & - & - & - \\ \hline
+Sadness & 0.955 & 0.739 & 0.777
+\end{tabular}
+\caption{Tweet with scores for gold, feature based and deep learning scores}
+\label{tab:predcomp}
+\end{table}
+In table \ref{tab:predcomp} it is apparent that the feature based predictions can vary drastically from the the deep learning predictions, and sometimes in a positive way, as the general scoring of joy tweets indicates.\\
+One thing to note with the error analysis presented is that these are a general subsample of a larger whole. There is a larger amount of the tweets who are unique or might share two emotion regression values, and for these, the deep learning model is superior to feature based model. The fact that joy is such an outlier in comparison the other emotions drags the deep learning model down significantly.   
 
 \subsection{Feature based}
 \subsubsection{Custom features and effects}
@@ -109,7 +139,7 @@ The metric \ref{eq:accuracy} used can be problematic since it completely disrega
 Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given. That said, there was many more data sources that could be considered.\\
 Emoji lexicons was one of them. Emojis are prevalent on twitter and they convey a lot of meaning in a difficult-to-map manner, meaning they sometimes might be used in an ironic or otherwise non-fitting situation. Take, for example:\\
 \begin{center}
-Can I just sulk in peace \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png}
+\textit{Can I just sulk in peace} \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png}
 \end{center}
 This tweet has a gold value of 0.688 in sadness, but looking at the smiley alone would tell a very different story than the feeling being conveyed by the whole tweet. This sort of intricate, feature-like nature of emojis could warrant a seperate usage of lexicons so as to augment the word embeddings, only for emojis. This trend is apparent in \cite{wassa2017} where it is specified that 6 teams used emoji lexicons or an embedding used solely for emojis.\\
 \\

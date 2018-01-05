@@ -43,15 +43,15 @@
 \contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{24}{subsection.6.3}
 \contentsline {subsection}{\numberline {6.4}Feature based}{25}{subsection.6.4}
 \contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{25}{subsubsection.6.4.1}
-\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{25}{subsubsection.6.4.2}
-\contentsline {subsection}{\numberline {6.5}Deep learning}{25}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{25}{subsubsection.6.5.1}
-\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{25}{subsubsection.6.5.2}
-\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{26}{subsubsection.6.5.3}
-\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{26}{subsubsection.6.5.4}
-\contentsline {section}{\numberline {7}Conclusion}{27}{section.7}
-\contentsline {section}{\numberline {8}Future work}{27}{section.8}
-\contentsline {subsection}{\numberline {8.1}Ensemble model}{27}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{28}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{28}{subsection.8.3}
-\contentsline {section}{\numberline {9}Appendix}{29}{section.9}
+\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{26}{subsubsection.6.4.2}
+\contentsline {subsection}{\numberline {6.5}Deep learning}{26}{subsection.6.5}
+\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{26}{subsubsection.6.5.1}
+\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{27}{subsubsection.6.5.2}
+\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{27}{subsubsection.6.5.3}
+\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{27}{subsubsection.6.5.4}
+\contentsline {section}{\numberline {7}Conclusion}{28}{section.7}
+\contentsline {section}{\numberline {8}Future work}{28}{section.8}
+\contentsline {subsection}{\numberline {8.1}Ensemble model}{28}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{29}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{29}{subsection.8.3}
+\contentsline {section}{\numberline {9}Appendix}{30}{section.9}

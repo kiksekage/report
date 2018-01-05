@@ -192,7 +192,7 @@ In figure \ref{fig:lwacc} the accuracy is plotted with regards to the different 
 \end{figure}
 As with the regression case, the Pearson score at the different loss weights would be expected to have a larger impact.
 
-\subsection{Results and data}
+\subsection{Results and data} \label{sec:deepscores}
 The final model used was zeroed in on through an experimental basis. It used $0_{weight}=0.45$ and $1_{weight}=0.55$, a dropout of 0.5 and $L_{reg}=0.45$ and $L_{class}=0.55$. 400 dimensional word and char embeddings and a 250 dimensional GRU was used for each submodel. The resulting sanity check yielded following results:
 \begin{table}[H]
 \centering

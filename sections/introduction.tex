@@ -16,7 +16,7 @@ The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be f
 For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\ 
 For this project a choice was made to focus on subtasks 1 and 5, emotion intensity regression and classification. Furthermore only the  english subsubtasks were considered.
 \subsection{Models}
-To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is a feature based model which utilizes the bag-of-words textual representation (En reference måske?), which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning(igen reference måske?) model, in which a version of a recurrent neural network (RNN), called a gated recurrent unit, is used.
+To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is a feature based model which utilizes the bag-of-words textual representation \cite{speech}, which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning model, in which a version of a recurrent neural network (RNN), called a gated recurrent unit, is used.
 
 \subsection{Data} \label{sec:introdata}
 To get an understanding of the tasks to be solved, one needs to understand the way the data has been annotated. In table \ref{tab:tweets} are some exemplary tweets in the four regression emotions and their corresponding classfication labels.\\

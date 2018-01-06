@@ -2,6 +2,7 @@
 \section{Methodology and theory}
 
 \subsection{Term frequency - inverse document frequency}
+One way of working with text is the "bag-of-words" approach. This approach strips syntactical information from the text by reducing the whole corpus to single words, not regarding the interplay in the detailed sense. These approaches would not be able to distinquish \textit{I see what I eat} and \textit{I eat what I see}, since the words and amount of occurrences are the same in the two tweets. One such weighting scheme that is based on the bag-of-words method is term frequency - inverse document frequency.\\
 To capture the terms (words) that have the highest impact on a corpus of documents (tweets) two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency} \cite{speech}.\\
 Term frequency is the raw frequency of a single term within a document. A term that occurs a lot in the document will have a high frequency and vice versa. The value of this is based on the notion that a term that occurs often in a document will reflect more meaning of the document than a term that occurs less. Since the term frequency is only concerned with the frequency within the document, there is a need to expand this with a value that deals with the terms occurrence in the full corpus.\\
 The inverse document frequency considers the terms occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents. As such inverse document frequency is calculated:\\
@@ -10,7 +11,7 @@ id f_{i} = log \left(\dfrac{N}{n_{i}}\right)+1,
 \end{equation}\\
 where \textit{N} is the total number of documents in the corpus and \textit{n} is the number of documents in which the term \textit{i} appears. Adding one ensures that terms that occur in all documents are not completely ignored. The full tf $\cdot$ idf weighting of a word \textit{i} in a tweet \textit{j} is then:\\
 \begin{equation} 
-w_{i,j}= tf_{i,j}\cdot id f_{i}
+w_{i,j}= tf_{i,j}\cdot id f_{i},
 \end{equation}\\
 where $tf_{i,j}$ is the term frequency of the term \textit{i} in the document \textit{j} and $id f_{i}$ is the inverse document frequency of the term \textit{i}.
 
@@ -22,7 +23,7 @@ Because of the nature of tweets and the task at hand, a model was needed that co
 \end{center}
 for example. In this specific example, the two parts of the tweet (separated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
 \\
-For a fully connected, feed forward network to be able to model these dependencies it would need to be very deep and have a high dimensionality. This model would have to learn the rules of the modelled language for each position of the sentence \cite{deeplearning}. This can be modelled more intuitively (and computationally efficient) by using a recurrent neural network (RNN). An RNN is a version of a neural network that are stateful and share weights between each step. A step, in the case of the model presented later, is either a word or character. To accommodate these dependencies, a version of a RNN was used, called gated recurrent units (GRUs).\\
+For a fully connected, feed forward network to be able to model these dependencies it would need to be very deep and have a high dimensionality. This model would have to learn the rules of the modelled language for each position of the sentence \cite{deeplearning}. This can be modelled more intuitively (and computationally efficient) by using a recurrent neural network (RNN). A RNN is a version of a neural network that is stateful and shares weights between each step. A step, in the case of the model presented later, is either a word or character. To accommodate these dependencies, a version of a RNN was used, called gated recurrent units (GRUs).\\
 \\
 The GRU, as used in the model, is based on the work in \cite{chung}. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
@@ -50,38 +51,36 @@ r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
 \end{equation}\\
 
 The update gate can choose which dimensions to copy or ignore, depending on the activation of a sigmoid function. The reset gate controls which part of the current state gets to be included in the computation of the future state.\\
-With regards to text, these GRUs can begin to make assumptions on which parts of the tweet have an interplay and can do so whether or not two interacting parts of the corpus are close to each other or not. By utilizing both forward and backward moving GRUs, tendencies in both directions can be found.
+With regards to text, these GRUs can begin to make assumptions on which parts of the tweet have an interplay and can do so whether or not two interacting parts of the tweets are close to each other or not. By utilizing both forward and backward moving GRUs, tendencies in both directions can be found.
 
 \subsection{Textual representation as word embeddings}
 For the neural network models to be able to process and work with text, a numerical representation of the individual words need to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious that these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information to solve the task at hand.\\
 The idea behind the word embeddings and how they can be used can be inferred from their high dimensional representations. A toy example:\\
 \\
-\begin{equation}
-\begin{aligned}
+\begin{align*}
 \vec{car} = [0,0,5,0,5]\\
 \vec{ship} = [0,0,3,0,4]\\
 \vec{shampoo} = [4,0,2,0,0]
-\end{aligned}
-\end{equation}\\
+\end{align*}\\
 Since car and ship are both a means of transport, it would make sense for them to be grouped closer together than for example shampoo and car. One could even go further and say that shampoo and ship might be grouped ever so slightly closer together than car and shampoo since they both concern themselves with water, but these deeper connections need higher and higher dimensional representations as to become clear.\\
 These word vectors can then be fed into a neural network, which can in turn tune the weights of these words through backpropagation so that the higher level features, in our case, guessing the emotion intensity felt by a tweeter, can be derived.
 
 \subsubsection{Training word embeddings}
-One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Meaning of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted. Since words can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to be used in. "push" could also mean a "git push" in the context of software development, for example. For this task then, the context is that of Twitter and social media in a broad sense.\\
+One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Meanings of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted. Since words can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to be used in. "push" could also mean a "git push" in the context of software development, for example. For this task then, the context is that of Twitter and social media in a broad sense.\\
 These word embeddings, as used in the model, are trained as specified in \cite{mikolov}. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
 
-\subsection{Metrics used}
-The metrics used in this project is the official metrics found on \cite{codalab}. \\
+\subsection{Metrics used} \label{sec:metrics}
+The metrics used in this report are the official metrics found on \cite{codalab}. \\
 The Pearson correlation coefficient is calculated thus in the evaluation of the scores and is used as the main metric for regression:\\
 \begin{equation} \label{eq:pearson}
 r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},
 \end{equation}\\
-where \textit{gold} is the truth/gold labels,\textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
-There are two aspects of getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the mean gold does not necessarily coincide with having similar values. Both of these features will get reduced the closer the prediction values get to the gold values, and therefore the mean squared error proved useful in solving the specific task.\\
-A secondary evaluation metric used for the regression task is the Pearson correlation for a subset that only include tweets with intensity score greater or equal to 0.5 \\ \\
+where \textit{gold} is the truth/gold labels, \textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
+There are two aspects of getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the mean gold does not necessarily coincide with having similar values.\\
+A secondary evaluation metric used for the regression task is the Pearson correlation for a subset that only includes tweets with intensity scores greater or equal to 0.5 \\ \\
 The following is the main metric used for classification:\\
 \begin{equation} \label{eq:accuracy}
 Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t}\rvert}{\lvert G_{t} \cup P_{t}\rvert}
 \end{equation}\\
-where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet t, and T is the set of tweets. \
+where $G_{t}$ is the set of the gold labels for tweet t, $P_{t}$ is the set of the predicted labels for tweet \textit{t}, and \textit{T} is the set of tweets. \
 The secondary metrics are a combination of micro and macro precision, recall and f-scores.

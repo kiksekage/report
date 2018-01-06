@@ -21,84 +21,36 @@
 \contentsline {section}{\numberline {5}Deep Learning}{15}{section.5}
 \contentsline {subsection}{\numberline {5.1}Model overview}{15}{subsection.5.1}
 \contentsline {subsubsection}{\numberline {5.1.1}Preprocessing of text and textual representation}{15}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Augmentation of data}{15}{subsubsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2}Augmentation of data}{16}{subsubsection.5.1.2}
 \contentsline {subsubsection}{\numberline {5.1.3}Word input model}{16}{subsubsection.5.1.3}
 \contentsline {subsubsection}{\numberline {5.1.4}Character input model}{16}{subsubsection.5.1.4}
 \contentsline {subsection}{\numberline {5.2}Model output}{17}{subsection.5.2}
 \contentsline {subsection}{\numberline {5.3}Loss functions}{17}{subsection.5.3}
 \contentsline {subsubsection}{\numberline {5.3.1}Regression loss function and metric}{17}{subsubsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.2}Classification loss function and metric}{17}{subsubsection.5.3.2}
+\contentsline {subsubsection}{\numberline {5.3.2}Classification loss function and metric}{18}{subsubsection.5.3.2}
 \contentsline {subsubsection}{\numberline {5.3.3}Combined loss function}{19}{subsubsection.5.3.3}
 \contentsline {subsection}{\numberline {5.4}Hyperparameter testing}{19}{subsection.5.4}
 \contentsline {subsubsection}{\numberline {5.4.1}Regression, task 1}{19}{subsubsection.5.4.1}
-\contentsline {subsubsection}{\numberline {5.4.2}Classification, task 5}{21}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.2}Classification, task 5}{22}{subsubsection.5.4.2}
 \contentsline {subsection}{\numberline {5.5}Results and data}{23}{subsection.5.5}
-\contentsline {section}{\numberline {6}Discussion}{23}{section.6}
-\contentsline {subsection}{\numberline {6.1}SemEval Task}{23}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Reusing tweets}{23}{subsubsection.6.1.1}
-\contentsline {subsection}{\numberline {6.2}Error analysis}{24}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Deep learning, regression scores}{24}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Deep learning, classification scores}{25}{subsubsection.6.2.2}
-\contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{25}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Feature based}{26}{subsection.6.4}
-\contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{26}{subsubsection.6.4.1}
-\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{26}{subsubsection.6.4.2}
-\contentsline {subsection}{\numberline {6.5}Deep learning}{26}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{26}{subsubsection.6.5.1}
-\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{26}{subsubsection.6.5.2}
-\contentsline {section}{\numberline {1}Introduction}{5}{section.1}
-\contentsline {subsection}{\numberline {1.1}Task}{5}{subsection.1.1}
-\contentsline {subsection}{\numberline {1.2}Models}{5}{subsection.1.2}
-\contentsline {subsection}{\numberline {1.3}Data}{5}{subsection.1.3}
-\contentsline {section}{\numberline {2}Related work}{6}{section.2}
-\contentsline {subsection}{\numberline {2.1}Semantic analysis RIGTIGE ORD?}{6}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}Fedt navn}{6}{subsection.2.2}
-\contentsline {section}{\numberline {3}Methodology and theory}{7}{section.3}
-\contentsline {subsection}{\numberline {3.1}Term frequency - inverse document frequency}{7}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Recurrent networks and gated recurrent networks}{7}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Textual representation as word embeddings}{8}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Training word embeddings}{9}{subsubsection.3.3.1}
-\contentsline {subsection}{\numberline {3.4}Metrics used}{9}{subsection.3.4}
-\contentsline {section}{\numberline {4}Feature based approach}{10}{section.4}
-\contentsline {subsection}{\numberline {4.1}Custom features}{10}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}Model overview}{11}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Hyperparameter testing}{11}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Regression, task 1}{11}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Classification, task 5}{13}{subsubsection.4.3.2}
-\contentsline {subsection}{\numberline {4.4}Results and data}{13}{subsection.4.4}
-\contentsline {section}{\numberline {5}Deep Learning}{14}{section.5}
-\contentsline {subsection}{\numberline {5.1}Model overview}{14}{subsection.5.1}
-\contentsline {subsubsection}{\numberline {5.1.1}Preprocessing of text and textual representation}{14}{subsubsection.5.1.1}
-\contentsline {subsubsection}{\numberline {5.1.2}Augmentation of data}{14}{subsubsection.5.1.2}
-\contentsline {subsubsection}{\numberline {5.1.3}Word input model}{15}{subsubsection.5.1.3}
-\contentsline {subsubsection}{\numberline {5.1.4}Character input model}{15}{subsubsection.5.1.4}
-\contentsline {subsection}{\numberline {5.2}Model output}{16}{subsection.5.2}
-\contentsline {subsection}{\numberline {5.3}Loss functions}{16}{subsection.5.3}
-\contentsline {subsubsection}{\numberline {5.3.1}Regression loss function and metric}{16}{subsubsection.5.3.1}
-\contentsline {subsubsection}{\numberline {5.3.2}Classification loss function and metric}{16}{subsubsection.5.3.2}
-\contentsline {subsubsection}{\numberline {5.3.3}Combined loss function}{18}{subsubsection.5.3.3}
-\contentsline {subsection}{\numberline {5.4}Hyperparameter testing}{18}{subsection.5.4}
-\contentsline {subsubsection}{\numberline {5.4.1}Regression, task 1}{18}{subsubsection.5.4.1}
-\contentsline {subsubsection}{\numberline {5.4.2}Classification, task 5}{20}{subsubsection.5.4.2}
-\contentsline {subsection}{\numberline {5.5}Results and data}{22}{subsection.5.5}
-\contentsline {section}{\numberline {6}Discussion}{22}{section.6}
-\contentsline {subsection}{\numberline {6.1}SemEval Task}{22}{subsection.6.1}
-\contentsline {subsubsection}{\numberline {6.1.1}Reusing tweets}{22}{subsubsection.6.1.1}
-\contentsline {subsection}{\numberline {6.2}Error analysis}{23}{subsection.6.2}
-\contentsline {subsubsection}{\numberline {6.2.1}Deep learning, regression scores}{23}{subsubsection.6.2.1}
-\contentsline {subsubsection}{\numberline {6.2.2}Deep learning, classification scores}{24}{subsubsection.6.2.2}
-\contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{24}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}Feature based}{25}{subsection.6.4}
-\contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{25}{subsubsection.6.4.1}
-\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{26}{subsubsection.6.4.2}
-\contentsline {subsection}{\numberline {6.5}Deep learning}{26}{subsection.6.5}
-\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{26}{subsubsection.6.5.1}
-\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{27}{subsubsection.6.5.2}
-\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{27}{subsubsection.6.5.3}
-\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{27}{subsubsection.6.5.4}
-\contentsline {section}{\numberline {7}Conclusion}{28}{section.7}
-\contentsline {section}{\numberline {8}Future work}{28}{section.8}
-\contentsline {subsection}{\numberline {8.1}Ensemble model}{28}{subsection.8.1}
-\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{29}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{29}{subsection.8.3}
-\contentsline {section}{\numberline {9}Appendix}{30}{section.9}
+\contentsline {section}{\numberline {6}Discussion}{24}{section.6}
+\contentsline {subsection}{\numberline {6.1}SemEval Task}{24}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Reusing tweets}{24}{subsubsection.6.1.1}
+\contentsline {subsection}{\numberline {6.2}Error analysis}{25}{subsection.6.2}
+\contentsline {subsubsection}{\numberline {6.2.1}Deep learning, regression scores}{25}{subsubsection.6.2.1}
+\contentsline {subsubsection}{\numberline {6.2.2}Deep learning, classification scores}{26}{subsubsection.6.2.2}
+\contentsline {subsection}{\numberline {6.3}Comparing the two approaches}{26}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}Feature based}{28}{subsection.6.4}
+\contentsline {subsubsection}{\numberline {6.4.1}Custom features and effects}{28}{subsubsection.6.4.1}
+\contentsline {subsubsection}{\numberline {6.4.2}Difference between bag-of-words and deep learning}{28}{subsubsection.6.4.2}
+\contentsline {subsection}{\numberline {6.5}Deep learning}{29}{subsection.6.5}
+\contentsline {subsubsection}{\numberline {6.5.1}What should the model do and how should it do it?}{29}{subsubsection.6.5.1}
+\contentsline {subsubsection}{\numberline {6.5.2}Model iterations}{29}{subsubsection.6.5.2}
+\contentsline {subsubsection}{\numberline {6.5.3}Loss functions; how to model the classification}{29}{subsubsection.6.5.3}
+\contentsline {subsubsection}{\numberline {6.5.4}Lexicons and features}{30}{subsubsection.6.5.4}
+\contentsline {section}{\numberline {7}Conclusion}{30}{section.7}
+\contentsline {section}{\numberline {8}Future work}{31}{section.8}
+\contentsline {subsection}{\numberline {8.1}Ensemble model}{31}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Generating noisy data for training}{31}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}Tackling all subtasks and languages}{32}{subsection.8.3}
+\contentsline {section}{\numberline {9}Appendix}{33}{section.9}

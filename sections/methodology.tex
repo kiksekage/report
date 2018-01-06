@@ -1,3 +1,4 @@
+
 % !TeX root = ../report.tex
 \section{Methodology and theory}
 
@@ -38,7 +39,7 @@ where the update gate $z_{t}^{j}$ decides how much of the unit is updated in the
 z_{t}^{j}=\sigma\left(W_{z}\mathrm{x}_{t}+U_{z}\mathrm{h}_{t-1}\right)^{j},
 \end{equation}\\
 
-where $U_{z}$ and $W_{z}$ are weight matrices. The candidate activation, which is similar to a simple recurrent unit, is calculated [Bahdanau et al., 2014]\\
+where $U_{z}$ and $W_{z}$ are weight matrices. The candidate activation, which is similar to a simple recurrent unit, is calculated\\
 
 \begin{equation} \label{eq:candidate}
 \tilde{h_{t}^{j}} = tanh\left(W\mathrm{x}_{t}+U\left(\mathrm{r}_{t}\odot\mathrm{h}_{t-1}\right)\right)^{j},

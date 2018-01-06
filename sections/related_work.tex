@@ -2,13 +2,11 @@
 
 \section{Related work}
 
-\subsection{Semantic analysis RIGTIGE ORD?}
+\subsection{Sentiment analysis}
 
 Semantic analysis and Twitter have been combined before. The SemEval tasks this report and models attempt to solve have been tried before. A lot of different approaches and general task overview has been outlined in \cite{wassa2017}, which is written by the creators of the task.\\
 The winning team of the SemEval EmoInt 2017, Prayas, have tackled a similar task as the regression task (task 1, in this report). The winning system utilized an ensemble approach consisting of 5 sub models and using a weighted average of these models to come up with the final result \cite{prayas}. This model is utilizing most of the different approaches mentioned in the literature and combining them into one and with great success. The model presented in this report will test out a simpler method and the influence of different hyperparameters and their direct correlation with the output scores of the model.\\
 The runner up in the SemEval EmoInt 2017, \cite{ims}, used a comparatively simpler model consisting of a CNN-LSTM neural network which bears resemblance to the model presented in this report. The difference between the models presented in this report and the IMS system is the utilization of lexicons and training their model on singular emotions (anger, fear, joy or sadness).\\
 
-\subsection{Fedt navn}
-
-VI MANGLER LIGE ENDNU ET LÆKKERT RELATED WORK SUBSECTION ;)\\
-LÆS MÅSKE Lexicon Integrated CNN Models with Attention for Sentiment Analysis I WORKSHOP PROCEEDINGS
+\subsection{SemEval tasks}
+The main task solved in this report is one of many different tasks presented by SemEval-2018. Affect is only one of multiple fields of interest. Coreference, information retrieval, lexical semantics and more are all represented. One of the shared task in the same field as the one being solved in this report is that of multilingual emoji prediction. Another one is a task of irony detection. Both of these are closely related, in that they operate on tweets but also with regards to sentiment detection. 

@@ -3,6 +3,11 @@
 \section{Discussion}
 
 \subsection{SemEval Task}
+
+\subsubsection{Scores and ranking of models}
+When looking at the scores from contenders in last years SemEval task, it is clear that the either of the models presented would not fare convincingly. Should the scores on the development data reflect the scores received on the test data and a Pearson score of 0.448 reached on the test data, the deep learning model would place 18th out of 21 entries. Last years winning model achieved a Pearson score of 0.747, which is considerably higher than the models presented.\\
+The classification task has not been attempted before, but the tentative scoreboard on the development data ranks the deep learning model presented at a 4th place out of 6 entries.
+
 \subsubsection{Reusing tweets} \label{sec:tweetreuse}
 The full amount of unique tweets between task 1 and 5 is not easily inferable, but some rules can be deduced:\\
 \begin{itemize}
@@ -16,25 +21,27 @@ Since the model is trained on the full 7102 regression tweets, two tweets with d
 \subsubsection{Deep learning, regression scores} \label{sec:regscoredeep}
 Since there is a considerable overlap in tweets, some tweets are reused in multiple emotions from task 1 which then in turn can be reused a single time in task 5. The actual numbers of unique and "duplicate" tweets has been discussed in section \ref{sec:tweetreuse}, but looking at the predictions versus the gold scores can help get a feeling for the effects using the naive data augmentation presented in section \ref{sec:augm}. To show difficulties with the reuse of tweets combined with the presented augmentation of data, consider the following examples where there is a large discrepancy between gold and prediction regression values:\\
 \begin{table}[H]
+\resizebox{\columnwidth}{!}{
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
 \parbox[t]{6cm}{\textit{'we need to do something. something must be done!!!!!' your anxiety is amusing. nothing will be done. despair.}} & 0.517 & 0.800 & 0.197 & 0.707 & 0.761\\ \hline
 \parbox[t]{6cm}{\textit{sick of this shit. \#mad \#angry. Rowan Atkinson Is Not Dead. Just A Bloody Online Hoax \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}\includegraphics[scale=0.015]{pictures/very_angry_emoji.png}}} & 0.938 & - & - & - & 0.417\\ \hline
 \parbox[t]{6cm}{\textit{Totally scare for this upcoming results .}} & 0.438 & 0.828 & - & 0.438 & 0.260\\ \hline
 \parbox[t]{6cm}{\textit{@mrjamesob @LBC \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png} snowflake random such a funny man never a dull moment brilliant}} & - & - & 0.591 & 0.074 & 0.528
-\end{tabular}
+\end{tabular}}
 \caption{Tweets and their corresponding gold intensity scores, bad predictions}
 \label{tab:regerrorhigh}
 \end{table}
 In table \ref{tab:regerrorhigh} are examples of where the deep learning model predicted quite badly. As mentioned in section \ref{sec:tweetreuse}, the reuse of tweets is a rather considerable problem, and the actual interplay with the predictions were not clear until very late in the process of developing the model, although the fact that this kind of one-hit model would always have its weaknesses was not unexpected. If the model is to have a good regression prediction, the gold label values have to be bunched close together. The ambiguity of the guesses is then naively reduced, since the values of the labels perchance are the same.\\
 \begin{table}[H]
+\resizebox{\columnwidth}{!}{
 \begin{tabular}{c|c|c|c|c|c|}
 Tweet & Anger score & Fear score & Joy score & Sadness score & Prediction  \\ \hline
 \parbox[t]{6cm}{\textit{What is this miserable ass weather all about \includegraphics[scale=0.015]{pictures/loudly_crying_face_emoji.png} dark and gloomy \#depressing \#weekoff \#wheresthesun}} & 0.773 & 0.6 & - & 0.955 & 0.776\\ \hline
 \parbox[t]{6cm}{\textit{Let's hope the ct scan gives us some answers on this lump today \#nervous}} & - & 0.818 & - & - & 0.816\\ \hline
 \parbox[t]{6cm}{\textit{@\_jesskardashian @trevschan2 both are awesome.  People are missing out not watching fear!!!}} & - & - & 0.375 & - & 0.376\\ \hline
 \parbox[t]{6cm}{\textit{@3lectric5heep Well that must sting doesn't it @CNN ?}} & 0.344 & 0.468 & - & 0.304 & 0.307
-\end{tabular}
+\end{tabular}}
 \caption{Tweets and their corresponding gold intensity scores, good predictions}
 \label{tab:regerrorlow}
 \end{table}
@@ -43,6 +50,7 @@ In table \ref{tab:regerrorlow} are shown some more favourable predictions made b
 \subsubsection{Deep learning, classification scores}
 Keeping in mind that the classification labels represent the following emotions (as presented in section \ref{sec:introdata}): anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust, the classification predictions are here presented.\\
 \begin{table}[H]
+\resizebox{\columnwidth}{!}{
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
 \parbox[t]{6cm}{\textit{Not sure tequila shots at my family birthday meal is up there with the best ideas I've ever had \#grim}} & 0 0 1 0 0 0 0 0 1 0 0 & 1 1 0 0 1 0 1 0 0 1 1 & $\sim$ 27\% \\ \hline
@@ -50,16 +58,18 @@ Tweet & Gold labels & Predictions & Hit percentage  \\ \hline
 \textit{\parbox[t]{6cm}{@SheenKL I assume the manga is \#good?}} & 0 1 0 0 1 1 1 0 0 0 1 & 1 0 1 0 0 0 0 0 0 0 0 &  $\sim$ 36 \% \\ \hline
 \parbox[t]{6cm}{\textit{Being @ \#work \#sober \includegraphics[scale=0.07]{pictures/man_facepalm_emoji.png}
  I can not do it}} & 0 0 1 1 0 0 0 1 1 0 0 & 0 1 0 0 1 0 1 0 0 0 0 & $\sim$ 36\% \\
-\end{tabular}
+\end{tabular}}
 \caption{Tweets and their corresponding gold classification list, bad predictions}
 \label{tab:classerrorhigh}
 \end{table}
+
 \begin{table}[H]
+\resizebox{\columnwidth}{!}{
 \begin{tabular}{c|c|c|c|}
 Tweet & Gold labels & Predictions & Hit percentage \\ \hline
 \parbox[t]{6cm}{\textit{@Chan\_lfc10 @paul\_rule @Nuttall1878 @DeadlineDayLive @Everton We'd be fuming if the hijacked our £8m move for a relegated full back \includegraphics[scale=0.015]{pictures/very_angry_emoji.png}}} & 1 0 1 0 0 0 0 0 0 0 0 & 1 0 1 0 0 0 0 0 0 0 0 & 100 \% \\ \hline
 \parbox[t]{6cm}{\textit{\#faith is like \#oil but \#fear is like \#dust easily blown away}} & 0 0 0 1 0 0 1 0 0 0 1 & 0 0 0 1 0 0 1 0 0 0 1 & 100 \% 
-\end{tabular}
+\end{tabular}}
 \caption{Tweets and their corresponding gold classification list, good predictions}
 \label{tab:classerrorlow}
 \end{table}
@@ -102,10 +112,11 @@ One thing to note with the error analysis presented is that these are a general 
 
 \subsection{Feature based}
 \subsubsection{Custom features and effects}
-All the custom features introduced in \ref{sec:customfeat} are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.
+All the custom features introduced in \ref{sec:customfeat} are boolean in nature; they consist of a check for whether or not a condition holds. This is a result of the relative ease with which one can engineer such features. The only value that would need any tweaking would be the ratio with which the spelling feature would be set, and this was deduced on a purely experimental basis. To a certain degree the positive and negative emojis are also a question of selecting and agreeing on which emojis are inherently positive and negative, but these were kept short and rather general.\\
+There were a lot of possible features to be developed for twitter data but the main focus of this report was to get an overview of the two methods. The feature engineering quickly runs into an expertise problem as well, as to what linguistic features are of interest and how.
 
 \subsubsection{Difference between bag-of-words and deep learning}
-The two models are built on two differing views when it comes to understanding text. The bag-of-words approach reduces the text to a large heap of words. By doing so, all interplay within the ordering of the words and syntax is removed. With the deep learning approach, a concept of keeping the syntax and the "human" way of reading is text is kept. This is because of the way the GRU keeps a state updated depending on the word being read but also the previous state. Instead of trying to infer meaning by using intricately designed features on a occurrences alone, the deep learning treats a tweet as a sequence, with possibly relevant structures intact. \\
+The two models are built on two differing views when it comes to understanding text. The bag-of-words approach reduces the text to a large heap of words. By doing so, all interplay within the ordering of the words and syntax is removed. With the deep learning approach, a concept of keeping the syntax and the "human" way of reading text is kept. This is because of the way the GRU keeps a state updated depending on the word being read but also the previous state. Instead of trying to infer meaning by using intricately designed features on word occurrences alone, the deep learning treats a tweet as a sequence, with possibly relevant structures intact. \\
 Although neural networks and deep learning methods are prevalent in the literature, one should not disregard custom features as a addition. This is clear when looking at the results from last years SemEval task \cite{wassa2017}.
 
 \subsection{Deep learning}
@@ -122,7 +133,7 @@ The last, and current model iteration has 11, one-dimensional output vectors, on
 \subsubsection{Loss functions; how to model the classification} \label{sec:lossdiscussion}
 As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotions. This uneven distribution might have something to do with the ease of labelling a tweet with the emotions. Since the train, dev and test data for the task has been manually labelled, certain "human" effects might be felt and can be backpropagated through to the models built on the data. For instance, it might be very easy to infer anger in a tweet; an exclamation mark, a curse word or something similar might be used to infer the feeling, but how can you infer surprise? Or trust? Furthermore, 274 of the tweets had no feeling flags set, which was to be understood as a "neutral" feeling.\\
 \begin{table}[H]
-\scalebox{0.8}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|}
+\resizebox{\columnwidth}{!}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|}
 & \text{Anger} & \text{Anticipation} & \text{Disgust} & \text{Fear} & \text{Joy} & \text{Love} & \text{Optimism} & \text{Pessimism} & \text{Sadness} & \text{Surprise} & \text{Trust} \\ \hline
 \text{\# of flags set} & 2605 & 990 & 2666 & 1269 & 2499 & 699 & 2007 & 812 & 2076 & 365 & 352 \\
 \text{\% of tweets} & 38\% & 14\% & 39\% & 19\% & 37\% & 10\% & 29\% & 12\% & 30\% & 5\% & 5\%
@@ -130,10 +141,10 @@ As can be seen in table \ref{tab:skew}, flags are skewed towards certain emotion
 \caption{The actual flags set and percentage of the full classification dataset}
 \label{tab:skew}
 \end{table}
-The metric, equation (\ref{eq:accuracy}), used can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case where all of the flags were not set.
+The metric, equation (\ref{eq:accuracy}), used in classification can be problematic since it completely disregards tweets with zero flags set, which otherwise could present a nice and diverse understanding of feelings and their interplay on how people will write their tweets. The secondary official metrics are also problematic in that they also disregard "neutral" tweets. To mitigate this, the evaluation script used for local evaluation included a twelfth dimension which was only set if all the others were not. This allowed for a more nuanced picture in the edge case where all of the flags were not set.
 
 \subsubsection{Lexicons and features}
-Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given in the task. That said, there was many more data sources that could be considered.\\
+Since the model was built with simplicity in mind, a choice was made early on that the model should use as little data as possible that was not included in the train, development and test sets. Since the weights were to be pretrained, those represented extra data, but otherwise the models takes as input only the data given in the task. That said, there were many more data sources that could be considered.\\
 Emoji lexicons was one of them. Emojis are prevalent on twitter and they convey a lot of meaning in a difficult-to-map manner, meaning they sometimes might be used in an ironic or otherwise non-fitting situation. Take, for example:\\
 \begin{center}
 \textit{Can I just sulk in peace} \includegraphics[scale=0.015]{pictures/tears_of_joy_emoji.png}

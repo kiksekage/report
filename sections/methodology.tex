@@ -6,7 +6,7 @@
 One way of working with text is the "bag-of-words" approach. This approach strips syntactical information from the text by reducing the whole corpus to single words, not regarding the interplay in the detailed sense. These approaches would not be able to distinquish \textit{I see what I eat} and \textit{I eat what I see}, since the words and amount of occurrences are the same in the two tweets. One such weighting scheme that is based on the bag-of-words method is term frequency - inverse document frequency.\\
 To capture the terms (words) that have the highest impact on a corpus of documents (tweets) two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency} \cite{speech}.\\
 Term frequency is the raw frequency of a single term within a document. A term that occurs a lot in the document will have a high frequency and vice versa. The value of this is based on the notion that a term that occurs often in a document will reflect more meaning of the document than a term that occurs less. Since the term frequency is only concerned with the frequency within the document, there is a need to expand this with a value that deals with the terms occurrence in the full corpus.\\
-The inverse document frequency considers the terms occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents. As such inverse document frequency is calculated:\\
+The inverse document frequency considers the terms occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents. As such, inverse document frequency is calculated:\\
 \begin{equation} 
 id f_{i} = log \left(\dfrac{N}{n_{i}}\right)+1,
 \end{equation}\\
@@ -17,14 +17,13 @@ w_{i,j}= tf_{i,j}\cdot id f_{i},
 where $tf_{i,j}$ is the term frequency of the term \textit{i} in the document \textit{j} and $id f_{i}$ is the inverse document frequency of the term \textit{i}.
 
 \subsection{Recurrent networks and gated recurrent networks}
-MANGLER MERE OMKRING RNN\\
 Because of the nature of tweets and the task at hand, a model was needed that could handle intricate features and their dependencies on each other through the full length of the tweets. Whether or not a sentence would show a strong emotional tendency towards fear or joy could sometimes rely on a specific part at the start of the tweet, such as this tweet:\\
 \begin{center}
-\textit{I had really strange and awful dreams last night. I'd didn't even eat cheese before bed  \#lovemysleep},\\
+\textit{I had really strange and awful dreams last night. I'd didn't even eat cheese before bed  \#lovemysleep}.\\
 \end{center}
-for example. In this specific example, the two parts of the tweet (separated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
+In this specific example, the two parts of the tweet (separated by the dot) show rather different states of mind by the tweeter, but together the overall feeling is easier to recognize.\\
 \\
-For a fully connected, feed forward network to be able to model these dependencies it would need to be very deep and have a high dimensionality. This model would have to learn the rules of the modelled language for each position of the sentence \cite{deeplearning}. This can be modelled more intuitively (and computationally efficient) by using a recurrent neural network (RNN). A RNN is a version of a neural network that is stateful and shares weights between each step. A step, in the case of the model presented later, is either a word or character. To accommodate these dependencies, a version of a RNN was used, called gated recurrent units (GRUs).\\
+For a fully connected, feed forward network to be able to model these dependencies it would need to be very deep and have a high dimensionality. This model would have to learn the rules of the modelled language for each position of the sentence \cite{deeplearning}. This can be modelled more intuitively (and computationally efficient) by using a RNN. A RNN is a version of a neural network that is stateful and shares weights between each step. A step, in the case of the model presented later, is either a word or character. To accommodate these dependencies, a version of a RNN was used, called gated recurrent units (GRUs).\\
 \\
 The GRU, as used in the model, is based on the work in \cite{chung}. The activation of the GRU at a given time \textit{t} is the sum of the previous activation, $h_{t-1}^{j}$ and the candidate activation, $\tilde{h_{t}^{j}}$.\\
 The activation $h_{t}^{j}$ of the GRU at time \textit{t} is:\\
@@ -45,7 +44,7 @@ where $U_{z}$ and $W_{z}$ are weight matrices. The candidate activation, which i
 \tilde{h_{t}^{j}} = tanh\left(W\mathrm{x}_{t}+U\left(\mathrm{r}_{t}\odot\mathrm{h}_{t-1}\right)\right)^{j},
 \end{equation}\\
 
-where \textit{W} and \textit{U} are the weights and $r_{t}$ is a set of reset gates and $\odot$ is the element-wise multiplication. When the reset gates are off (closer to 0) it allows the previous calculated steps to have less impact on the calculation of the candidate activation. The reset gate is calculated much like the update gate in equation \ref{eq:update}\\
+where \textit{W} and \textit{U} are the weights and $r_{t}$ is a set of reset gates and $\odot$ is the element-wise multiplication. When the reset gates are off (closer to 0) it allows the previous calculated steps to have less impact on the calculation of the candidate activation. The reset gate is calculated much like the update gate in equation (\ref{eq:update})\\
 
 \begin{equation}\label{eq:reset}
 r_{t}^{j}=\sigma\left(W_{r}\mathrm{x}_{t}+U_{r}\mathrm{h}_{t-1}\right)^{j}.
@@ -55,7 +54,7 @@ The update gate can choose which dimensions to copy or ignore, depending on the 
 With regards to text, these GRUs can begin to make assumptions on which parts of the tweet have an interplay and can do so whether or not two interacting parts of the tweets are close to each other or not. By utilizing both forward and backward moving GRUs, tendencies in both directions can be found.
 
 \subsection{Textual representation as word embeddings}
-For the neural network models to be able to process and work with text, a numerical representation of the individual words need to used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious that these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information to solve the task at hand.\\
+For the neural network models to be able to process and work with text, a numerical representation of the individual words need to be used. Since language carries a large amount of meaning and information in a more or less obscure and contextual sense, it is obvious that these representations need to be of a high dimensionality, so as to be able to convey enough meaningful information to solve the task at hand.\\
 The idea behind the word embeddings and how they can be used can be inferred from their high dimensional representations. A toy example:\\
 \\
 \begin{align*}
@@ -64,14 +63,15 @@ The idea behind the word embeddings and how they can be used can be inferred fro
 \vec{shampoo} = [4,0,2,0,0]
 \end{align*}\\
 Since car and ship are both a means of transport, it would make sense for them to be grouped closer together than for example shampoo and car. One could even go further and say that shampoo and ship might be grouped ever so slightly closer together than car and shampoo since they both concern themselves with water, but these deeper connections need higher and higher dimensional representations as to become clear.\\
-These word vectors can then be fed into a neural network, which can in turn tune the weights of these words through backpropagation so that the higher level features, in our case, guessing the emotion intensity felt by a tweeter, can be derived.
+These word vectors can then be fed into a neural network, which can in turn tune the weights of these words through backpropagation so that the higher level features, in this case, guessing the emotion intensity felt by a tweeter, can be derived.
 
 \subsubsection{Training word embeddings}
 One thing of note with word embeddings is the instantiation of the weights in the start of the models training. Meanings of words can be inferred in the purely "objective" sense, the thesaurus explanation of what "push" means is fairly straightforward and accepted. Since words can also have contextual meanings, a training of these weights have to be done in the context that these word embeddings have to be used in. "push" could also mean a "git push" in the context of software development, for example. For this task then, the context is that of Twitter and social media in a broad sense.\\
 These word embeddings, as used in the model, are trained as specified in \cite{mikolov}. The objective of the training is to learn word representations that have a predictive ability to guess the surrounding words. 
 
 \subsection{Metrics used} \label{sec:metrics}
-The metrics used in this report are the official metrics found on \cite{codalab}. \\
+The metrics used in this report are the official metrics found on\\
+\href{https://competitions.codalab.org/competitions/17751#learn_the_details-evaluation}{https://competitions.codalab.org/competitions/17751\#learn\_the\_details\-evaluation}. \\
 The Pearson correlation coefficient is calculated thus in the evaluation of the scores and is used as the main metric for regression:\\
 \begin{equation} \label{eq:pearson}
 r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt{\sum \left(gold-m_{gold}\right)^{2} \left(pred-m_{pred}\right)^{2}}},

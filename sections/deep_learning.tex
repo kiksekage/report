@@ -7,7 +7,8 @@ The multitask model itself is a hard parameter sharing model, meaning the weight
 \subsection{Model overview}
 
 \subsubsection{Preprocessing of text and textual representation} \label{sec:preprop}
-For the textual preprocessing, all tweets are read in and converted using a mapping from a word to an integer. This ensures that similar words get mapped to the same key and also enables an enforcing on the maximum amount of words to be used. Train data is treated differently than development and test data, in that every unique word read in train data gets converted to the word vector associated with the word. If an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language. Furthermore, user mentions and numbers get mapped to a placeholder value instead of reading in their actual values.\\
+For the textual preprocessing, all tweets are read in and converted using a mapping from a word to an integer. This ensures that similar words get mapped to the same key and also enables an enforcing on the maximum amount of words to be used.\\
+Train data is treated differently than development and test data, in that every unique word read in train data gets converted to the word vector associated with the word. If an unknown word gets read in the development or test data its numerical value gets replaced by an "unknown" placeholder. One way of countering this is to use pretrained word embeddings. This does not constitute as having read and adapted to the test set, since one could envision having a pretrained word embedding for every word in the entire language. Furthermore, user mentions and numbers get mapped to a placeholder value instead of reading in their actual values.\\
 The embedding weights used in the model are retrieved from a large set of pretrained embeddings which have been trained on Twitter data ($\sim$400 million tweets). The embeddings used are created by extraction from the system specified \cite{godin}. The words in the dataset for the task at hand are then looked up in the pretrained embeddings. If these are not present a zero vector is used instead, which will then be trained from the ground up by the model.\\
 Since the model used both word and character representations, the characters were read in separately, although the same basic principle was followed. Every character had a integer mapped to them and this integer would then map to a high dimensional vector with weights that could then be optimized by the network. No pretrained embeddings were used for the characters and so they had to be trained from the ground up, every time.
 
@@ -24,7 +25,7 @@ The word input to the model is 60  $\cdot$ 400 dimensional vectors that have bee
 		\label{fig:wordmodel}
 \end{figure}
 \subsubsection{Character input model}
-The character input to the model is 256 $\cdot$ 400 dimensional vectors that have been through the same preprocessing and augmentation as the word inputs ((1) in figure \ref{fig:charmodel}). These vectors then get passed into a residual neural network which works as a loop of batch normalizations, dropout applications and 1-dimension convolutions ((2) in figure \ref{fig:charmodel}). Each loop ends with an addition of the values at the start of the loop and the current result and then a max pooling. These vectors are then passed into two GRU layers similar to the word input ((4) and (5) in figure \ref{fig:charmodel}) which are then concatenated and passed along to be connected with the word input part ((6) in figure \ref{fig:charmodel}).
+The character input to the model is 256 $\cdot$ 400 dimensional vectors that have been through the same preprocessing and augmentation as the word inputs ((1) in figure \ref{fig:charmodel}). These vectors then get passed into a residual neural network which works as a loop of batch normalizations, dropout applications and one-dimensional convolutions ((2) in figure \ref{fig:charmodel}). Each loop ends with an addition of the values at the start of the loop and the current result and then a max pooling. These vectors are then passed into two GRU layers similar to the word input ((4) and (5) in figure \ref{fig:charmodel}) which are then concatenated and passed along to be connected with the word input part ((6) in figure \ref{fig:charmodel}).
 \begin{figure}[H]
 	\centering
 		\includegraphics[scale=0.25]{pictures/char_model.png}
@@ -49,7 +50,7 @@ For the regression output of the model, mean squared error was chosen as a way t
 \begin{equation} \label{eq:lreg}
 L_{reg}(gold, pred)=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}\left(gold_{i}-pred_{i}\right)^{2}.
 \end{equation}\\
-Since the mean squared error seeks to minimize the difference between the prediction and the gold score, this will minimize Pearson score as well. 
+Since the mean squared error seeks to minimize the difference between the prediction and the gold score, a low mean squared error will bring the Pearson score closer to one. 
 The metric used for the regression is mean absolute error:\\
 \begin{equation} \label{eq:meanabs}
 m_{reg}=\dfrac{1}{b_{size}}\sum^{b_{size}}_{i=1}abs\left(gold_{i}-pred_{i}\right),
@@ -65,7 +66,7 @@ f(gold,pred) =
        wbce(gold,pred), &\quad\text{otherwise} \\
      \end{cases},
 \end{equation}\\
-where \textit{wbce} is our custom weighted binary cross entropy function. Since the model has eleven output layers, there is a loss function for each of the eleven emotions/layers. The function (\ref{eq:fclass}) is used in a batch wise manner as in the regression case on each emotion:\\
+where \textit{wbce} is a custom weighted binary cross entropy function. Since the model has eleven output layers, there is a loss function for each of the eleven emotions/layers. The function (\ref{eq:fclass}) is used in a batch wise manner as in the regression case on each emotion:\\
 \begin{equation} \label{eq:lemotion}
 L_{emotion}=\dfrac{1}{b_{size}} \sum_{i=1}^{b_{size}} f(gold_i, pred_i).
 \end{equation}\\
@@ -137,7 +138,7 @@ The loss weights plotted in figure \ref{fig:averageLW} are the loss weights as o
         \label{fig:averageLW}
 \end{figure}
 The loss weights have an outlier, and much like the outlier in the testing of weights for the binary cross entropy, it is unclear why it is present as the model guessed in the correct form, just badly.\\
-The general tendency of the loss weights was not fully as to be expected, meaning, a high weighting towards the regression task would yield a better Pearson score. This might have to do with the fact that the embedding weights being trained to do minimize the weighted sum of the two loss function (equation (\ref{eq:lratio})) might not favor one task heavily over the other, i.e. the two tasks have an overlap in the weights that solve them and in the overall structure of the tasks.
+The general tendency of the loss weights was not fully as to be expected, meaning, a high weighting towards the regression task would yield a better Pearson score. This might have to do with the fact that the embedding weights being trained to minimize the weighted sum of the two loss function (equation (\ref{eq:lratio})) might not favor one task heavily over the other, i.e. the two tasks have an overlap in the weights that solve them and in the overall structure of the tasks.
 
 \begin{table}[H]
 \centering
@@ -162,7 +163,7 @@ From table \ref{tab:no_emb}, it is clear that embeddings give  a better score th
 \caption{Pearson scores with NADAM and ADAM optimizers}\label{tab:NADAM_ADAM}
 \end{table}
 
-Some light testing was done in way of optimizers used for the model. The final choice of optimizer was the ADAM optimizer with a learning rate of 0.001, a learning rate decay of $10^{-5}$ and clipping the gradients to 1. The only difference between the two optimizers was that NADAM used Nesterov momentum. Explaining the difference and going in-depth with optimizers is beyond the scope of this report, and only superficial tests were done between the two. \\
+Some light testing was done in way of optimizers used for the model. The final choice of optimizer was the ADAM optimizer with a learning rate of 0.001, a learning rate decay of $10^{-5}$ and making sure that the gradients have a max norm of 1d. The only difference between the two optimizers was that NADAM used Nesterov momentum. Explaining the difference and going in-depth with optimizers is beyond the scope of this report, and only superficial tests were done between the two. \\
 \\
 More detailed barplots of the different runs can be seen in the appendix, figures \ref{fig:dropoutvalues}, \ref{fig:BCEvalues} and \ref{fig:LWvalues}.
 \subsubsection{Classification, task 5}
@@ -207,7 +208,7 @@ The final model used was zeroed in on through an experimental basis. It used $0_
 
 \begin{table}[H]
 \centering
-\scalebox{0.7}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+\resizebox{\columnwidth}{!}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
 \multicolumn{12}{c}{\textbf{F-micro}} & \textbf{Global accuracy}\\ \hline
 Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadness & Surprise & Trust & Neutral & \\ \cline{1-12}
 0.968 & 0.931 & 0.964 & 0.971 & 0.982 & 0.931 & 0.955 & 0.899 & 0.951 & 0.909 & 0.905 & 0.833 & 0.933 \\
@@ -229,7 +230,7 @@ The results of the final model on the development data is shown in tables \ref{t
 
 \begin{table}[H]
 \centering
-\scalebox{0.7}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
+\resizebox{\columnwidth}{!}{\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c|c|c}
 \multicolumn{12}{c}{\textbf{F-micro}} & \textbf{Global accuracy}\\ \hline
 Anger & Anticipation & Disgust & Fear & Joy & Love & Optimism & Pessimism & Sadness & Surprise & Trust & Neutral & \\ \cline{1-12}
 0.687 & 0.232 & 0.626 & 0.638 & 0.685 & 0.416 & 0.574 & 0.179 & 0.555 & 0.141 & 0.038 & 0.053 & 0.443 \\

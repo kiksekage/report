@@ -1,7 +1,7 @@
 % !TeX root = ../report.tex
 \section{Introduction}
 We communicate via natural language, but it is not only the message that is communicated, it is also the sentiment and intensity of that sentiment. Intensity of sentiment in sentences and words are borderline subjective and therefore difficult to classify in general. Therefore it is interesting to see if it is possible to build a model or program that can do this automatically. \\
-Natural Language Processing (NLP) is the science regarding natural, "human" language, and in this field detecting emotion or sentiment in text can have a lot of real world uses, such as analysing stance towards political statements or online consumer reviews of products, etc. \\
+Natural Language Processing (NLP) is the field regarding natural, "human" language, and in this field detecting emotion or sentiment in text can have a lot of real world uses, such as analysing stance towards political statements or online consumer reviews of products, etc. \\
 Twitter is a great service for detecting these sentiments, since it is user-written and often emotionally fuelled.
 \subsection{Task} \label{sec:task}
 The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be found on \href{https://competitions.codalab.org/competitions/17751}{https://competitions.codalab.org/competitions/17751}. The task is split into five subtasks:\\
@@ -16,10 +16,10 @@ The task to be solved is the SemEval-2018 Task 1: Affect in Tweets, and can be f
 For all of these subtasks, three language subsubtasks are present, for english, spanish and arabic.\\ 
 For this project a choice was made to focus on subtasks 1 and 5, emotion intensity regression and classification. Furthermore only the  english subsubtasks were considered.
 \subsection{Models}
-To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is a feature based model which utilizes the bag-of-words textual representation which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning model, in which a version of a recurrent neural network (RNN), called a gated recurrent unit, is used.
+To best solve these subtasks, different models are tried out, compared and analysed. Furthermore, 2 different approaches are tried out to solve the tasks. One approach is a feature based model which utilizes the bag-of-words textual representation which takes into account the individual words but not the context in which the words are placed in the sentence. The other approach is the deep learning model, in which a version of a recurrent neural network (RNN), called a gated recurrent unit (GRU), is used.
 
 \subsection{Data} \label{sec:introdata}
-To get an understanding of the tasks to be solved, one needs to understand the way the data has been annotated. In table \ref{tab:tweets} are some exemplary tweets in the four regression emotions and their corresponding classfication labels.\\
+To get an understanding of the tasks to be solved, one needs to understand the way the data has been annotated. In table \ref{tab:tweets} are some exemplary tweets in the four regression emotions and their corresponding classification labels.\\
 \begin{table}[H]
 \resizebox{\columnwidth}{!}{\begin{tabular}{c|ccc}
 Regression emotion & Tweet & Regression value & Classification labels \\ 
@@ -32,8 +32,8 @@ Joy & \parbox[t]{6cm}{Whatever you decide to do make sure it makes you \#happy.}
 \hline
 Sadness & \parbox[t]{6cm}{Honestly don't know why I'm so unhappy most of the time. I just want it all to stop :(   \#itnevergoes} & 0.949 & 0 0 0 1 0 0 0 1 1 0 0 \\ 
 \end{tabular}}
-\caption{Exemplary tweets with regression and clasification labels}
+\caption{Exemplary tweets with regression and classification labels}
 \label{tab:tweets}
 \end{table}
-The regressional value is how much of a particular emotion is felt and the classification labels are mapped as such: anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust. A "one" (on) flag means that the corresponding emotion is present in the tweet. Since the data for the two subtasks have been annotated independently, the anger flag could be off in an tweet with a low regression value for anger, for example. \\
+The regressional value is how much of a particular emotion is felt and the classification labels are mapped as such: anger, anticipation, disgust, fear, joy, love, optimism, pessimism, sadness, surprise and trust. A "1" (on) flag means that the corresponding emotion is present in the tweet. Since the data for the two subtasks have been annotated independently, the anger flag could be off in an tweet with a low regression value for anger, for example. \\
 Furthermore, since this report was written before the release date of the test data sets, all data used in this report is either train data or development data.

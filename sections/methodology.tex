@@ -3,7 +3,7 @@
 \section{Methodology and theory}
 
 \subsection{Term frequency - inverse document frequency}
-One way of working with text is the "bag-of-words" approach. This approach strips syntactical information from the text by reducing the whole corpus to single words, not regarding the interplay in the detailed sense. These approaches would not be able to distinquish \textit{I see what I eat} and \textit{I eat what I see}, since the words and amount of occurrences are the same in the two tweets. One such weighting scheme that is based on the bag-of-words method is term frequency - inverse document frequency.\\
+One way of working with text is the "bag-of-words" approach. This approach strips syntactical information from the text by reducing the whole corpus to single words, not regarding the interplay in the detailed sense. These approaches would not be able to distinguish \textit{I see what I eat} and \textit{I eat what I see}, since the words and amount of occurrences are the same in the two tweets. One such weighting scheme that is based on the bag-of-words method is term frequency - inverse document frequency.\\
 To capture the terms (words) that have the highest impact on a corpus of documents (tweets) two factors play a crucial role: the \textit{term frequency} and \textit{inverse document frequency} \cite{speech}.\\
 Term frequency is the raw frequency of a single term within a document. A term that occurs a lot in the document will have a high frequency and vice versa. The value of this is based on the notion that a term that occurs often in a document will reflect more meaning of the document than a term that occurs less. Since the term frequency is only concerned with the frequency within the document, there is a need to expand this with a value that deals with the terms occurrence in the full corpus.\\
 The inverse document frequency considers the terms occurrence in the corpus as a whole. The intuition behind inverse document frequency is that a term that occurs in fewer documents will have a higher discriminating effect on these documents. As such, inverse document frequency is calculated:\\
@@ -78,7 +78,7 @@ r_{p} = \dfrac{\sum \left(gold-m_{gold}\right) \left(pred-m_{pred}\right)}{\sqrt
 \end{equation}\\
 where \textit{gold} is the truth/gold labels, \textit{pred} is the predictions and \textit{m} is the mean of the vectors subscripted.\\
 There are two aspects of getting a good correlation score, i.e. a score of one. This is done by having predictions close to the gold score but also having a mean prediction similar to the gold scores. Getting a mean prediction similar to the mean gold does not necessarily coincide with having similar values.\\
-A secondary evaluation metric used for the regression task is the Pearson correlation for a subset that only includes tweets with intensity scores greater or equal to 0.5 \\ \\
+A secondary evaluation metric used for the regression task is the Pearson correlation for a subset of the corpus that only includes tweets with intensity scores greater or equal to 0.5 \\ \\
 The following is the main metric used for classification:\\
 \begin{equation} \label{eq:accuracy}
 Accuracy = \dfrac{1}{\lvert T \rvert} \sum_{t\in T}\dfrac{\lvert G_{t} \cap P_{t}\rvert}{\lvert G_{t} \cup P_{t}\rvert}

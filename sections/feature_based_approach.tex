@@ -3,9 +3,8 @@
 \section{Feature based approach}\label{sec:feature}
 
 For the feature based approach, a feature extraction is done with regards to the term frequency - inverse document frequency. This has been the golden standard for feature extraction, and ensures that the features extracted have the highest descriptive effect with regards to the tweets in which the feature occurs versus the tweets in which the feature does not. These extracted features are then used for the training of one of two different models, depending on the subtask at hand.\\
-Both models build on the random forest learning method since its properties support both regression and multi-label classification. \\
-Random Forest is an extended learning method that works as an ensemble of decision trees, In the ensemble, an input vector is sent down each tree in the forest and then the result can be either an average or a weighted average, in the case of regression, or the majority vote, in the case of classification.\\
-The two models share the same general feature extraction, so they can be made directly comparable if the extraction parameters are kept comparatively the same.
+Both models build on the random forest learning method since its properties support regression as well as multi-label classification. \\
+Random Forest is an extended learning method that works as an ensemble of decision trees. In the ensemble, an input vector is sent down each tree in the forest and then the result can be either an average or a weighted average, in the case of regression, or the majority vote, in the case of classification.\\
 
 \subsection{Custom features} \label{sec:customfeat}
 Besides the Tf-idf feature extraction method, the model uses a custom feature extraction function. This function has different flags, corresponding to different features that could be of interest in these particular tweets. \\
@@ -22,7 +21,7 @@ These features are then appended to the feature matrix returned by the Tf-idf ex
 Custom features can be based on linguistic and contextual intuition as well as a higher degree of linguistic analysis, as opposed to the deep learning features which will be trained with a more mathematically and statistical paradigm in mind.
 
 \subsection{Model overview}
-All the models share the same feature extraction method and the actual models were implemented using libraries which allowed a very high level approach. This acted as an introduction to the subtasks and which of these would be interesting to focus on. Furthermore, the feature based model acted as a baseline system which would work as a stepstone for the deep learning models used later in the process. In the final version of the code, two feature based models were used:\\
+All the models share the same feature extraction method and the actual models were implemented using libraries which allowed a very high level approach. This served as an introduction to the subtasks and which of these would be interesting to focus on. Furthermore, the feature based model acted as a baseline system which would work as a stepstone for the deep learning models used later in the process. In the final version of the code, two feature based models were used:\\
 \begin{itemize}
  \item Random forest classifier
  \item Random forest regressor
@@ -37,7 +36,7 @@ Figure \ref{fig:max_f_pearson} is a plot of the Pearson score with regards to th
         \caption{Pearson score as a function of max-features from 500-30000 with n-gram range 1-5 and all the custom features on}
         \label{fig:max_f_pearson}
 \end{figure}
-It is evident from figure \ref{fig:max_f_pearson} that there is not clear-cut correlation between the max features and the Pearson score. The tests were run with up to 30000 max features.\\
+It is evident from figure \ref{fig:max_f_pearson} that there is no clear-cut correlation between the max features and the Pearson score. The tests were run with up to 30000 max features.\\
 \\
 The use of n-grams in tweets was also complicated. Since the tweets are so dense and diverse, larger n-grams have very little chance of reappearing in other tweets, and as such there was very little difference in the n-gram ranges used when the max features were kept in place. The results of testing this is shown in table \ref{tab:ngram}\\
 \begin{table}[H]
@@ -101,7 +100,7 @@ Custom feature & Anger & Fear & Joy & Sadness \\ \hline
 \caption{Custom feature importance as extracted from each model with 1000 max features and n-gram range 1-5.}
 \label{tab:customimportance}
 \end{table}
-The importance shown in table \ref{tab:customimportance} has no direct correlation with how well a custom feature might be to predict new data, only how much influence it has on the train data is had been applied to. This is evident in the fact that hashtag has an overall lower importance than spelling, but when running the model with the same set-up, but with the hashtag or spelling custom features on, the spelling model gets a worse result than the hashtag model.
+The importance shown in table \ref{tab:customimportance} has no direct correlation with how well a custom feature might be to predict new data, only how much influence it has on the train data is had been applied to. This is evident in the fact that hashtag has an overall lower importance than spelling, but when running the model with the same set-up, with the hashtag or spelling custom features on, the spelling model gets a worse result than the hashtag model.
 
 \subsubsection{Classification, task 5}
 Figure \ref{fig:max_f_accuracy} is a plot of the accuracy with regards to the amount of max features used. This graph is equivalent to the one presented in section \ref{sec:regfeat}, just for the classification model. 
